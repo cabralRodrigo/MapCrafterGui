@@ -30,7 +30,6 @@ $RECYCLE.BIN/
 x64/
 build/
 bld/
-[Bb]in/
 [Oo]bj/
 
 # Roslyn cache directories
@@ -147,10 +146,9 @@ publish/
 
 # NuGet Packages
 packages/*
+src/packages/*
 *.nupkg
-## TODO: If the tool you use requires repositories.config
-## uncomment the next line
-#!packages/repositories.config
+src/packages/repositories.config
 
 # Enable "build/" folder in the NuGet Packages folder since
 # NuGet packages use it for MSBuild targets.
