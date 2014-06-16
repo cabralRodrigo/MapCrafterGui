@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapCrafterGUI", "MapCrafterGUI\MapCrafterGUI.csproj", "{486C2532-826C-46DC-A0CC-70831CD9B7D6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapCrafterGUI.Test", "MapCrafterGUI.Test\MapCrafterGUI.Test.csproj", "{43FC9FB2-F411-427F-BB3A-ACBB11D05F37}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{486C2532-826C-46DC-A0CC-70831CD9B7D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{486C2532-826C-46DC-A0CC-70831CD9B7D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{486C2532-826C-46DC-A0CC-70831CD9B7D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43FC9FB2-F411-427F-BB3A-ACBB11D05F37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43FC9FB2-F411-427F-BB3A-ACBB11D05F37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43FC9FB2-F411-427F-BB3A-ACBB11D05F37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43FC9FB2-F411-427F-BB3A-ACBB11D05F37}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
