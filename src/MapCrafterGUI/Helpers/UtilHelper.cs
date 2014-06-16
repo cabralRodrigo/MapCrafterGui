@@ -53,13 +53,14 @@ namespace MapCrafterGUI.Helpers
         public static string StringReplaceWithMetadata(string text, object metadata)
         {
             string textWithMetadata = text;
-            foreach (PropertyInfo prop in metadata.GetType().GetProperties().Where(w => w.CanRead))
-            {
-                string propName = prop.Name;
-                object propValue = prop.GetValue(metadata);
-                if (propValue != null)
-                    textWithMetadata = textWithMetadata.Replace(string.Format("{{{0}}}", propName), propValue.ToString());
-            }
+            if (metadata != null)
+                foreach (PropertyInfo prop in metadata.GetType().GetProperties().Where(w => w.CanRead))
+                {
+                    string propName = prop.Name;
+                    object propValue = prop.GetValue(metadata);
+                    if (propValue != null)
+                        textWithMetadata = textWithMetadata.Replace(string.Format("{{{0}}}", propName), propValue.ToString());
+                }
             return textWithMetadata;
         }
     }

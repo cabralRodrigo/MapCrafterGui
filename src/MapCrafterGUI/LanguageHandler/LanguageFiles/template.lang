@@ -1,0 +1,8 @@
+{
+	"Fields":
+	{
+		"frmMain.btnAddWorld.Text": "Add World",
+        "frmMain.Text":  "MapCrafterGui v{Version}",
+        "frmMain.Erro.GenericErro": "Error occurred!"
+	}
+}
