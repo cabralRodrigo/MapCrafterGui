@@ -21,6 +21,9 @@ namespace MapCrafterGUI.LanguageHandler
         }
         public static void SetLocalizedField(this Control control, LanguageControlField field, string defaultValue, object metadata)
         {
+            if (control == null)
+                return;
+
             PropertyInfo prop = control.GetType().GetProperty(field.ToString());
             string newPropValue = UtilHelper.StringReplaceWithMetadata(GetLocalizedFieldForControl(control, field, defaultValue), metadata);
             prop.SetValue(control, newPropValue);
@@ -68,6 +71,9 @@ namespace MapCrafterGUI.LanguageHandler
 
         private static string GetGenericFieldNameOnLanguegFileForControl(Control control, LanguageGenericField genericField, string fieldDetails)
         {
+            if (control == null)
+                return string.Empty;
+
             string controlName = (control.GetType().GetProperty("Name").GetValue(control) ?? string.Empty).ToString();
 
             if (string.IsNullOrEmpty(controlName))
@@ -77,6 +83,9 @@ namespace MapCrafterGUI.LanguageHandler
         }
         private static string GetFieldNameOnLanguageFileForControl(Control control, LanguageControlField field)
         {
+            if (control == null)
+                return string.Empty;
+
             string controlNameParent = string.Empty, controlName = string.Empty;
 
             if (control.Parent != null)
