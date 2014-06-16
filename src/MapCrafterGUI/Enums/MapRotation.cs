@@ -1,10 +1,18 @@
-﻿namespace MapCrafterGUI.Enums
+﻿using System.ComponentModel;
+namespace MapCrafterGUI.Enums
 {
     public enum MapRotation
     {
-        Top_Left,
-        Top_Right,
-        Bottom_Right,
-        Bottom_Left
+        [Description("Top-Left")]
+        TopLeft,
+
+        [Description("Top-Right")]
+        TopRight,
+
+        [Description("Bottom-Right")]
+        BottomRight,
+
+        [Description("Bottom-Left")]
+        BottomLeft
     }
 }

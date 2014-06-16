@@ -8,7 +8,7 @@ namespace MapCrafterGUI.MapCrafterConfiguration
 {
     public class MapConfiguration
     {
-        public static MapRotation DefaultRotation = MapRotation.Top_Left;
+        public static MapRotation DefaultRotation = MapRotation.TopLeft;
 
         public Guid MapID { get; set; }
         public string Name { get; set; }

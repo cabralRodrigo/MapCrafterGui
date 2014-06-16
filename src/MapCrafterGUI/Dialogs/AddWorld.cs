@@ -1,4 +1,5 @@
 ﻿using MapCrafterGUI.Enums;
+using MapCrafterGUI.Helpers;
 using MapCrafterGUI.MapCrafterConfiguration;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace MapCrafterGUI.Dialogs
         {
             InitializeComponent();
             this.config = config;
-            this.cbDimension.DataSource = Enum.GetValues(typeof(Dimension));
+            this.cbDimension.DataSource = UtilHelper.ConvertEnumToDictionary<Dimension>(true).Select(s => s.Value).ToArray();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -34,7 +35,7 @@ namespace MapCrafterGUI.Dialogs
             //TODO: do a validation here
 
             Dimension dimension;
-            if (Enum.TryParse<Dimension>(cbDimension.SelectedValue.ToString(), out dimension))
+            if (Enum.TryParse<Dimension>(cbDimension.SelectedIndex.ToString(), out dimension))
                 this.config.Worlds.Add(new WorldConfiguration(this.txtWorldName.Text, this.txtInputFolder.Text) { Dimension = dimension });
 
             this.DialogResult = DialogResult.OK;
@@ -47,7 +48,5 @@ namespace MapCrafterGUI.Dialogs
             if (folderDialog.ShowDialog() == DialogResult.OK)
                 this.txtInputFolder.Text = folderDialog.SelectedPath;
         }
-
-        
     }
 }

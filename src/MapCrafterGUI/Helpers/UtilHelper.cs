@@ -1,10 +1,10 @@
-﻿using MapCrafterGUI.MapCrafterConfiguration;
+﻿using MapCrafterGUI.LanguageHandler;
 using Newtonsoft.Json;
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 using System.Reflection;
 
 namespace MapCrafterGUI.Helpers
@@ -21,13 +21,20 @@ namespace MapCrafterGUI.Helpers
             return string.Format("#{0}{1}{2}", color.R.ToString("X2"), color.G.ToString("X2"), color.B.ToString("X2"));
         }
 
-        public static Dictionary<int, string> ConvertEnumToDictionary<T>() where T : IComparable, IFormattable, IConvertible
+        public static Dictionary<int, string> ConvertEnumToDictionary<T>(bool useLocalizedEnumDescription) where T : IComparable, IFormattable, IConvertible
         {
             Array arrayEnum = Enum.GetValues(typeof(T));
             Dictionary<int, string> dicEnum = new Dictionary<int, string>();
 
             for (int i = 0; i < arrayEnum.GetLength(0); i++)
-                dicEnum.Add(i, arrayEnum.GetValue(i).ToString());
+            {
+                string enumDescription;
+                if (useLocalizedEnumDescription)
+                    enumDescription = Language.GetLocalizedDescriptionForEnum((Enum)Enum.Parse(typeof(T), i.ToString()));
+                else
+                    enumDescription = arrayEnum.GetValue(i).ToString();
+                dicEnum.Add(i, enumDescription);
+            }
 
             return dicEnum;
         }
@@ -62,6 +69,16 @@ namespace MapCrafterGUI.Helpers
                         textWithMetadata = textWithMetadata.Replace(string.Format("{{{0}}}", propName), propValue.ToString());
                 }
             return textWithMetadata;
+        }
+
+        public static string GetEnumDescription(Enum en)
+        {
+            string enumDescription = string.Empty;
+            DescriptionAttribute descAttribute = en.GetType().GetField(en.ToString()).GetCustomAttribute<DescriptionAttribute>();
+            if (descAttribute != null)
+                enumDescription = descAttribute.Description;
+
+            return enumDescription;
         }
     }
 }

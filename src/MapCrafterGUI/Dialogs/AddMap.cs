@@ -1,5 +1,6 @@
 ﻿using MapCrafterGUI.Enums;
 using MapCrafterGUI.Helpers;
+using MapCrafterGUI.LanguageHandler;
 using MapCrafterGUI.MapCrafterConfiguration;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace MapCrafterGUI.Dialogs
             InitializeComponent();
             this.world = world;
             this.lblTextWorldName.Text = this.world.Name;
-            this.cbRenderMode.DataSource = Enum.GetValues(typeof(RenderMode));
+            this.cbRenderMode.DataSource = UtilHelper.ConvertEnumToDictionary<RenderMode>(true).Select(s => s.Value).ToList();
 
             this.PopulateRotations();
         }
@@ -40,7 +41,7 @@ namespace MapCrafterGUI.Dialogs
             MapConfiguration map = new MapConfiguration(txtMapName.Text, world);
 
             RenderMode renderMode;
-            if (Enum.TryParse<RenderMode>(this.cbRenderMode.SelectedValue.ToString(), out renderMode))
+            if (Enum.TryParse<RenderMode>(this.cbRenderMode.SelectedIndex.ToString(), out renderMode))
                 map.RenderMode = renderMode;
 
             foreach (var enumIndex in this.clbRotations.CheckedIndices)
@@ -54,8 +55,12 @@ namespace MapCrafterGUI.Dialogs
 
         private void PopulateRotations()
         {
-            foreach (var rotation in UtilHelper.ConvertEnumToDictionary<MapRotation>())
-                this.clbRotations.Items.Add(rotation.Value.Replace('_', '-'), rotation.Value == MapConfiguration.DefaultRotation.ToString());
+            foreach (var rotation in UtilHelper.ConvertEnumToDictionary<MapRotation>(false))
+            {
+                Enum enumRotation = (Enum)Enum.Parse(typeof(MapRotation), rotation.Value);
+                string enumDescription = Language.GetLocalizedDescriptionForEnum(enumRotation);
+                this.clbRotations.Items.Add(enumDescription, enumRotation.ToString() == MapConfiguration.DefaultRotation.ToString());
+            }
         }
     }
 }

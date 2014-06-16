@@ -1,12 +1,21 @@
 ﻿using MapCrafterGUI.Helpers;
+using System;
+using System.ComponentModel;
 using System.Reflection;
 using System.Windows.Forms;
 
 namespace MapCrafterGUI.LanguageHandler
 {
-    //TODO: Write tests for this class
     public static class Language
     {
+        public static string GetLocalizedDescriptionForEnum(Enum en)
+        {
+            string nameOnFile = GetFieldNameOnLanguageFileForEnum(en);
+            string defaultValue = UtilHelper.GetEnumDescription(en);
+
+            return GetLocalizedStringRaw(nameOnFile, defaultValue);
+        }
+
         public static void SetLocalizedField(this Control control, LanguageControlField field)
         {
             SetLocalizedField(control, field, string.Empty, null);
@@ -25,7 +34,7 @@ namespace MapCrafterGUI.LanguageHandler
                 return;
 
             PropertyInfo prop = control.GetType().GetProperty(field.ToString());
-            string newPropValue = UtilHelper.StringReplaceWithMetadata(GetLocalizedFieldForControl(control, field, defaultValue), metadata);
+            string newPropValue = GetLocalizedFieldForControl(control, field, defaultValue, metadata);
             prop.SetValue(control, newPropValue);
         }
 
@@ -100,6 +109,13 @@ namespace MapCrafterGUI.LanguageHandler
                 return string.Format("{0}.{1}", controlName, field.ToString());
             else
                 return string.Format("{0}.{1}.{2}", controlNameParent, controlName, field.ToString());
+        }
+        private static string GetFieldNameOnLanguageFileForEnum(Enum en)
+        {
+            string enumClass = en.GetType().Name;
+            string enumItem = en.ToString();
+
+            return string.Format("{0}.{1}", enumClass, enumItem);
         }
 
         private static string GetLocalizedStringRaw(string fieldName)
