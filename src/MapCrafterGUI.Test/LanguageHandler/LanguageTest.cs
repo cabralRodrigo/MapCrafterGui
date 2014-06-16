@@ -8,6 +8,19 @@ namespace MapCrafterGUI.Test.LanguageHandler
     [TestClass]
     public class LanguageTest
     {
+        private enum EnumTest
+        {
+            [System.ComponentModel.Description("Description for item 1")]
+            Item1,
+
+            Item2,
+
+            [System.ComponentModel.Description("Description for item 3")]
+            Item3,
+
+            Item4
+        }
+
         public LanguageTest()
         {
             this.LanguageFileTeste = new LanguageFile();
@@ -16,6 +29,8 @@ namespace MapCrafterGUI.Test.LanguageHandler
             LanguageFileTeste.Fields.Add("frmMain.btnAddMap.Text", "Add Map nº {MapNumber}");
             LanguageFileTeste.Fields.Add("frmMain.Info.TestInfo", "This is a info for a test");
             LanguageFileTeste.Fields.Add("frmMain.Erro.ErroWithMetadata", "This is a error message.{LineBreak}Date: {Data}");
+            LanguageFileTeste.Fields.Add("EnumTest.Item3", "Localized description for item 3");
+            LanguageFileTeste.Fields.Add("EnumTest.Item4", "Localized description for item 4");
             LanguageFile.instance = this.LanguageFileTeste;
 
             this.FormTest = new Form() { Name = "frmMain" };
@@ -29,6 +44,39 @@ namespace MapCrafterGUI.Test.LanguageHandler
         private Button ButtonAddWorld;
         private Button ButtonAddMap;
         private Button ButtonAddTest;
+
+        [TestMethod]
+        public void GetLocalizedDescriptionForEnumTest()
+        {
+            string successResult = "Description for item 1";
+
+            string result = Language.GetLocalizedDescriptionForEnum(EnumTest.Item1);
+
+            Assert.AreEqual<string>(successResult, result);
+        }
+        [TestMethod]
+        public void GetLocalizedDescriptionForEnumTest2()
+        {
+            string result = Language.GetLocalizedDescriptionForEnum(EnumTest.Item2);
+
+            Assert.AreEqual<string>(string.Empty, result);
+        }
+        [TestMethod]
+        public void GetLocalizedDescriptionForEnumTest3()
+        {
+            string successResult = "Localized description for item 3";
+            string result = Language.GetLocalizedDescriptionForEnum(EnumTest.Item3);
+
+            Assert.AreEqual<string>(successResult, result);
+        }
+        [TestMethod]
+        public void GetLocalizedDescriptionForEnumTest4()
+        {
+            string successResult = "Localized description for item 4";
+            string result = Language.GetLocalizedDescriptionForEnum(EnumTest.Item4);
+
+            Assert.AreEqual<string>(successResult, result);
+        }
 
         [TestMethod]
         public void GetLocalizedFieldForControlTest()
