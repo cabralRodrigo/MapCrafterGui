@@ -1,5 +1,7 @@
 ﻿using MapCrafterGUI.Forms;
+using MapCrafterGUI.LanguageHandler;
 using System;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace MapCrafterGUI
@@ -9,9 +11,15 @@ namespace MapCrafterGUI
         [STAThread]
         static void Main()
         {
+            InitProgram();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmMain());
+        }
+
+        static void InitProgram()
+        {
+            LanguageFile.LoadLanguageFile(new CultureInfo("pt-BR"));
         }
     }
 }

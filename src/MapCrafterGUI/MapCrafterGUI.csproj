@@ -79,7 +79,12 @@
     <Compile Include="Helpers\Info.cs" />
     <Compile Include="Helpers\IOHelper.cs" />
     <Compile Include="Helpers\Point3D.cs" />
+    <Compile Include="Helpers\TraceHelper.cs" />
     <Compile Include="Helpers\UtilHelper.cs" />
+    <Compile Include="LanguageHandler\Language.cs" />
+    <Compile Include="LanguageHandler\LanguageGenericField.cs" />
+    <Compile Include="LanguageHandler\LanguageControlField.cs" />
+    <Compile Include="LanguageHandler\LanguageFile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MapCrafterConfiguration\MapConfiguration.cs" />

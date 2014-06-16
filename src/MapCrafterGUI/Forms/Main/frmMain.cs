@@ -101,12 +101,8 @@ namespace MapCrafterGUI.Forms
             dialogOpenProject.InitialDirectory = Environment.CurrentDirectory;
             if (dialogOpenProject.ShowDialog() == DialogResult.OK)
             {
-                RenderConfiguration newConfig;
-                if (UtilHelper.LoadConfigurationFromFile(dialogOpenProject.FileName, out newConfig))
-                {
-                    RenderConfiguration.SetConfiguration(newConfig);
+                if (RenderConfiguration.LoadFromFile(dialogOpenProject.FileName))
                     this.RefreshForm();
-                }
                 else
                     MessageBox.Show("Error on open the project. Please create the project again or try another file.", "Error on open the project", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

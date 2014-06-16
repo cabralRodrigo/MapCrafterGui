@@ -1,9 +1,11 @@
 ﻿using MapCrafterGUI.MapCrafterConfiguration;
 using Newtonsoft.Json;
 using System;
+using System.Linq;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
-using System.IO;
+using System.Reflection;
 
 namespace MapCrafterGUI.Helpers
 {
@@ -30,24 +32,35 @@ namespace MapCrafterGUI.Helpers
             return dicEnum;
         }
 
-        public static bool LoadConfigurationFromFile(string path, out RenderConfiguration configuration)
+        public static bool LoadFileTypeFromFile<T>(string path, out T objectLoaded)
         {
-            RenderConfiguration config = null;
+            objectLoaded = default(T);
             bool successOnLoad = false;
-
             try
             {
-                if (IOHelper.GetFileExtension(path) == "." + Info.PROJECT_FILE_EXTENSION)
-                {
-                    string textFile = IOHelper.ReadFile(path);
-                    config = JsonConvert.DeserializeObject<RenderConfiguration>(textFile);
-                    successOnLoad = true;
-                }
+                string textFile = IOHelper.ReadFile(path);
+                objectLoaded = JsonConvert.DeserializeObject<T>(textFile);
+                successOnLoad = objectLoaded != null;
             }
-            catch { }
+            catch (Exception ex)
+            {
+                TraceHelper.ThrowMessage("Error on load a object from a text file. Path: " + path, ex);
+            }
 
-            configuration = config;
             return successOnLoad;
+        }
+
+        public static string StringReplaceWithMetadata(string text, object metadata)
+        {
+            string textWithMetadata = text;
+            foreach (PropertyInfo prop in metadata.GetType().GetProperties().Where(w => w.CanRead))
+            {
+                string propName = prop.Name;
+                object propValue = prop.GetValue(metadata);
+                if (propValue != null)
+                    textWithMetadata = textWithMetadata.Replace(string.Format("{{{0}}}", propName), propValue.ToString());
+            }
+            return textWithMetadata;
         }
     }
 }

@@ -18,7 +18,15 @@ namespace MapCrafterGUI.MapCrafterConfiguration
                 return _instance;
             }
         }
+        public static bool LoadFromFile(string path)
+        {
+            RenderConfiguration newConfig;
+            bool success = UtilHelper.LoadFileTypeFromFile(path, out newConfig);
+            if (success)
+                SetConfiguration(newConfig);
 
+            return success;
+        }
         public static void SetConfiguration(RenderConfiguration config)
         {
             _instance = config;
