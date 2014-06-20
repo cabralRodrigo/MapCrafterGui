@@ -28,7 +28,7 @@ namespace MapCrafterGUI.Test.LanguageHandler
             LanguageFileTeste.Fields.Add("frmMain.btnAddWorld.Text", "Add World");
             LanguageFileTeste.Fields.Add("frmMain.btnAddMap.Text", "Add Map nº {MapNumber}");
             LanguageFileTeste.Fields.Add("frmMain.Info.TestInfo", "This is a info for a test");
-            LanguageFileTeste.Fields.Add("frmMain.Erro.ErroWithMetadata", "This is a error message.{LineBreak}Date: {Data}");
+            LanguageFileTeste.Fields.Add("frmMain.Error.ErroWithMetadata", "This is a error message.{LineBreak}Date: {Data}");
             LanguageFileTeste.Fields.Add("EnumTest.Item3", "Localized description for item 3");
             LanguageFileTeste.Fields.Add("EnumTest.Item4", "Localized description for item 4");
             LanguageFile.instance = this.LanguageFileTeste;
@@ -125,7 +125,7 @@ namespace MapCrafterGUI.Test.LanguageHandler
         public void GetLocalizedGenericFieldForControlTest_DefaultValue()
         {
             string defaultValue = "Erro default value";
-            string result = Language.GetLocalizedGenericFieldForControl(this.FormTest, LanguageGenericField.Erro, "Erro1", defaultValue);
+            string result = Language.GetLocalizedGenericFieldForControl(this.FormTest, LanguageGenericField.Error, "Erro1", defaultValue);
 
             Assert.AreEqual<string>(defaultValue, result);
         }
@@ -135,7 +135,9 @@ namespace MapCrafterGUI.Test.LanguageHandler
             string successResult = string.Format("This is a error message.{0}Date: {1}", Environment.NewLine, DateTime.Now.ToString("yyyy-MM-dd"));
             object metadata = new { LineBreak = Environment.NewLine, Data = DateTime.Now.ToString("yyyy-MM-dd") };
 
-            string result = Language.GetLocalizedGenericFieldForControl(this.FormTest, LanguageGenericField.Erro, "ErroWithMetadata", metadata);
+            string result = Language.GetLocalizedGenericFieldForControl(this.FormTest, LanguageGenericField.Error, "ErroWithMetadata", metadata);
+
+            Assert.AreEqual(successResult, result);
         }
         [TestMethod]
         public void GetLocalizedGenericFieldForControlTest_ControlNull()
