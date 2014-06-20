@@ -1,1 +1,1 @@
-start xcopy "C:\Users\Rodrigo\Source\Repos\MapCrafterGui\src\MapCrafterGUI\LanguageHandler\LanguageFiles" "C:\Users\Rodrigo\Source\Repos\MapCrafterGui\src\MapCrafterGUI\bin\Debug\lang\" /e /d /c /y
+start xcopy ".\LanguageHandler\LanguageFiles" ".\bin\Debug\lang\" /e /d /c /y
