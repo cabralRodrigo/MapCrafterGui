@@ -1,5 +1,26 @@
 {
 	"Fields":
 	{
+		"WorldConfiguration.Error.WorldFolderInvalid":"Pasta não existente",
+		"WorldConfiguration.Error.LevelFileInvalid":"A pasta selecionada não contém o arquivo 'level.dat'.",
+		"WorldConfiguration.Error.WorldNameInvalid":"Nome inválido para o mundo",		
+		
+		"Dimension.Overworld":"Mundo Superior",
+		"Dimension.Nether":"Inferno",
+		"Dimension.End":"O Fim",
+		
+		"frmAddWorld.Text":"Adicionar Mundo",
+		"frmAddWorld.lblDimension.Text":"Dimensão",
+		"frmAddWorld.lblInputFolder.Text":"Diretório",
+		"frmAddWorld.lblWorldName.Text":"Nome",
+		"frmAddWorld.btnAdd.Text":"OK",
+		"frmAddWorld.btnCancel.Text":"Cancelar",
+		"frmAddWorld.btnInputFolder.Text":"Procurar",
+		"frmAddWorld.folderDialog.Description":"Selecione a pasta que contém o mundo",
+		
+		"frmMain.Error.ErrorOnOpeningFile":"Ocorreu um erro ao abrir esse projeto.{LineBreak}Por favor, tente abrir outro projeto.",
+		"frmMain.Error.ErrorOnOpeningFileCaption":"Erro ao abrir o projeto",		
+		"frmMain.Info.WorldInfoInvalid":"Um ou mais mundos do projeto carregado são inválidos.{LineBreak}Veja mais detalhes nas informações do mundo.",
+		"frmMain.Info.WorldInfoInvalidCaption":"Erro ao abrir o projeto"
 	}
 }

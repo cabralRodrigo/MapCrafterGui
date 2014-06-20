@@ -12,6 +12,7 @@ using MapCrafterGUI.Dialogs;
 using MapCrafterGUI.Forms.Main;
 using MapCrafterGUI.MapCrafterConfiguration;
 using Newtonsoft.Json;
+using MapCrafterGUI.LanguageHandler;
 
 namespace MapCrafterGUI.Forms
 {
@@ -36,7 +37,7 @@ namespace MapCrafterGUI.Forms
 
         private void btnAddWorld_Click(object sender, EventArgs e)
         {
-            using (AddWorld addWorldDialog = new AddWorld(config))
+            using (frmAddWorld addWorldDialog = new frmAddWorld(config))
                 if (addWorldDialog.ShowDialog() == DialogResult.OK)
                     RefreshForm();
         }
@@ -51,7 +52,6 @@ namespace MapCrafterGUI.Forms
             foreach (WorldConfiguration world in config.Worlds)
                 tabsWorlds.Controls.Add(new TabPageWorld(world));
         }
-
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -90,7 +90,7 @@ namespace MapCrafterGUI.Forms
 
         private void saveConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            dialogSaveProject.InitialDirectory  = Environment.CurrentDirectory;
+            dialogSaveProject.InitialDirectory = Environment.CurrentDirectory;
             if (dialogSaveProject.ShowDialog() == DialogResult.OK)
                 IOHelper.CreateTextFile(dialogSaveProject.FileName, JsonConvert.SerializeObject(this.config), true);
 
@@ -101,10 +101,23 @@ namespace MapCrafterGUI.Forms
             dialogOpenProject.InitialDirectory = Environment.CurrentDirectory;
             if (dialogOpenProject.ShowDialog() == DialogResult.OK)
             {
+                string errorOnOpening = Language.GetLocalizedGenericFieldForControl(this, LanguageGenericField.Error, "ErrorOnOpeningFile", new { LineBreak = Environment.NewLine });
+                string errorOnOpeningCaption = Language.GetLocalizedGenericFieldForControl(this, LanguageGenericField.Error, "ErrorOnOpeningFileCaption");
+
                 if (RenderConfiguration.LoadFromFile(dialogOpenProject.FileName))
+                {
+
                     this.RefreshForm();
+                    if (RenderConfiguration.instance.Worlds.Where(w => !w.IsWorldValid()).Count() > 0)
+                    {
+                        string worldsInvalid = Language.GetLocalizedGenericFieldForControl(this, LanguageGenericField.Info, "WorldInfoInvalid", new { LineBreak = Environment.NewLine });
+                        string worldsInvalidCaption = Language.GetLocalizedGenericFieldForControl(this, LanguageGenericField.Info, "WorldInfoInvalidCaption");
+
+                        MessageBox.Show(worldsInvalid, worldsInvalidCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
                 else
-                    MessageBox.Show("Error on open the project. Please create the project again or try another file.", "Error on open the project", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(errorOnOpening, errorOnOpeningCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
