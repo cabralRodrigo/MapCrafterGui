@@ -78,6 +78,20 @@ namespace MapCrafterGUI.LanguageHandler
             return UtilHelper.StringReplaceWithMetadata(fieldValue, metadata);
         }
 
+        public static string GetLocalizedStringRaw(string fieldName)
+        {
+            return GetLocalizedStringRaw(fieldName, string.Empty, null);
+        }
+        public static string GetLocalizedStringRaw(string fieldName, string defaultValue)
+        {
+            return GetLocalizedStringRaw(fieldName, defaultValue, null);
+        }
+        public static string GetLocalizedStringRaw(string fieldName, string defaultValue, object metadata)
+        {
+            string localizedString = LanguageFile.instance.GetFieldValue(fieldName, defaultValue);
+            return UtilHelper.StringReplaceWithMetadata(localizedString, metadata);
+        }
+
         private static string GetGenericFieldNameOnLanguegFileForControl(Control control, LanguageGenericField genericField, string fieldDetails)
         {
             if (control == null)
@@ -116,16 +130,6 @@ namespace MapCrafterGUI.LanguageHandler
             string enumItem = en.ToString();
 
             return string.Format("{0}.{1}", enumClass, enumItem);
-        }
-
-        private static string GetLocalizedStringRaw(string fieldName)
-        {
-            return LanguageFile.instance.GetFieldValue(fieldName);
-        }
-        private static string GetLocalizedStringRaw(string fieldName, string defaultValue)
-        {
-            string localizedString = GetLocalizedStringRaw(fieldName);
-            return string.IsNullOrEmpty(localizedString) ? defaultValue : localizedString;
         }
     }
 }
