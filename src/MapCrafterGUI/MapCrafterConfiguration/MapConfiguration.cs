@@ -1,4 +1,5 @@
 ﻿using MapCrafterGUI.Enums;
+using MapCrafterGUI.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,7 +63,7 @@ namespace MapCrafterGUI.MapCrafterConfiguration
                 sb.Append(" " + MapConfiguration.DefaultRotation.ToString());
             else
                 foreach (var rotation in this.GetRotations())
-                    sb.Append(" " + rotation.ToString().ToLower().Replace('_', '-'));
+                    sb.Append(" " + UtilHelper.GetEnumValue(rotation));
 
             return sb.ToString();
         }

@@ -74,11 +74,26 @@ namespace MapCrafterGUI.Helpers
         public static string GetEnumDescription(Enum en)
         {
             string enumDescription = string.Empty;
-            DescriptionAttribute descAttribute = en.GetType().GetField(en.ToString()).GetCustomAttribute<DescriptionAttribute>();
+            DescriptionAttribute descAttribute = GetAttributesOfEnum<DescriptionAttribute>(en);
             if (descAttribute != null)
                 enumDescription = descAttribute.Description;
 
             return enumDescription;
+        }
+
+        public static string GetEnumValue(Enum en)
+        {
+            string enumValue = string.Empty;
+            DefaultValueAttribute valueAttribute = GetAttributesOfEnum<DefaultValueAttribute>(en);
+            if (valueAttribute != null)
+                enumValue = (valueAttribute.Value ?? string.Empty).ToString();
+
+            return enumValue;
+        }
+
+        private static T GetAttributesOfEnum<T>(Enum en) where T : Attribute
+        {
+            return en.GetType().GetField(en.ToString()).GetCustomAttribute<T>();
         }
     }
 }
