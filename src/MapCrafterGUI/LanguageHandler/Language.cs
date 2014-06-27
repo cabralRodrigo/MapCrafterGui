@@ -82,6 +82,10 @@ namespace MapCrafterGUI.LanguageHandler
         {
             return GetLocalizedStringRaw(fieldName, string.Empty, null);
         }
+        public static string GetLocalizedStringRaw(string fieldName, object metadata)
+        {
+            return GetLocalizedStringRaw(fieldName, string.Empty, metadata);
+        }
         public static string GetLocalizedStringRaw(string fieldName, string defaultValue)
         {
             return GetLocalizedStringRaw(fieldName, defaultValue, null);
