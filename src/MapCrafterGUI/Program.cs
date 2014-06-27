@@ -1,5 +1,6 @@
 ﻿using MapCrafterGUI.Forms;
 using MapCrafterGUI.LanguageHandler;
+using MapCrafterGUI.MapCrafterGUIConfiguration;
 using System;
 using System.Globalization;
 using System.Windows.Forms;
@@ -20,6 +21,7 @@ namespace MapCrafterGUI
         static void InitProgram()
         {
             LanguageFile.LoadLanguageFile(new CultureInfo("pt-BR"));
+            Configuration.InitConfiguration();
         }
     }
 }

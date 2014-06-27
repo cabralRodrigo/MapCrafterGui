@@ -8,5 +8,7 @@
 
         public const string RENDER_CONFIGURATION_FILE_NAME = "render.config";
         public const string RENDER_CONFIGURATION_OUTPUT_FOLDER = "output";
+
+        public const string APPLICATION_CONFIGURATION_FILE = "settings.config";
     }
 }

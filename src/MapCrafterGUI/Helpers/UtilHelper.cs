@@ -91,6 +91,22 @@ namespace MapCrafterGUI.Helpers
             return enumValue;
         }
 
+        public static bool CompareObjects<T>(T obj1, T obj2)
+        {
+            bool equals = false;
+
+            if (obj1 == null && obj2 == null)
+                equals = true;
+
+            if ((obj1 == null && obj2 != null) || (obj1 != null && obj2 != null))
+                equals = obj2.Equals(obj1);
+
+            if (obj2 == null && obj1 != null)
+                equals = obj1.Equals(obj2);
+
+            return equals;
+        }
+
         private static T GetAttributesOfEnum<T>(Enum en) where T : Attribute
         {
             return en.GetType().GetField(en.ToString()).GetCustomAttribute<T>();
