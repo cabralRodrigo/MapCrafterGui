@@ -51,7 +51,7 @@ namespace MapCrafterGUI.Helpers
             }
             catch (Exception ex)
             {
-                TraceHelper.ThrowMessage("Error on load a object from a text file. Path: " + path, ex);
+                TraceHelper.Error("Error while loading an object from a file. Path:" + path, ex);
             }
 
             return successOnLoad;
