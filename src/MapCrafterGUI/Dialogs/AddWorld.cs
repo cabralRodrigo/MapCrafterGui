@@ -99,7 +99,7 @@ namespace MapCrafterGUI.Dialogs
         }
         private bool txtWorldNameValidate()
         {
-            bool error = WorldConfiguration.Validate_WorldName(txtWorldName.Text);
+            bool error = !WorldConfiguration.Validate_WorldName(txtWorldName.Text);
             string errorMessage = WorldConfiguration.Validate_Error_WorldName;
 
             if (error)
@@ -113,7 +113,7 @@ namespace MapCrafterGUI.Dialogs
                 this.validationControl.SetError(this.txtWorldName, string.Empty);
             }
 
-            return error;
+            return !error;
         }
     }
 }

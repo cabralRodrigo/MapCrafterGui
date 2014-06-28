@@ -32,7 +32,7 @@ namespace MapCrafterGUI.MapCrafterConfiguration
         }
         public static bool Validate_WorldName(string worldName)
         {
-            return string.IsNullOrEmpty(worldName);
+            return !string.IsNullOrEmpty(worldName);
         }
 
         public string InputFolder { get; set; }
