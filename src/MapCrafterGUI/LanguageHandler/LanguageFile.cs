@@ -42,9 +42,13 @@ namespace MapCrafterGUI.LanguageHandler
             {
                 fieldValue = this.Fields[fieldName];
             }
+            catch (KeyNotFoundException)
+            {
+                TraceHelper.Warning("Could not find in the language file, the value for the field " + fieldName);               
+            }
             catch (Exception ex)
             {
-                TraceHelper.ThrowMessage("Error on load a language string: " + fieldName, ex);
+                TraceHelper.Error("Error loading the localized string that belongs to the field " + fieldName, ex);
             }
             return fieldValue;
         }

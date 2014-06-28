@@ -5,21 +5,45 @@ namespace MapCrafterGUI.Helpers
 {
     public static class TraceHelper
     {
-        public static void ThrowMessage(string message)
+        private enum MessageLevel
         {
-            #if DEBUG
-                Console.WriteLine(message);
-                Trace.WriteLine(message);
-                Debug.WriteLine(message);
-
-                if (Debugger.IsAttached)
-                    Debugger.Break();
-            #endif
+            Info,
+            Warning,
+            Error
         }
 
-        public static void ThrowMessage(string message, Exception exception)
+        public static void Warning(string warning)
         {
-            ThrowMessage(string.Format("Ex.:{0}{1}{2}", exception.Message, Environment.NewLine, message));
+            LogMessage(warning, MessageLevel.Warning);
+        }
+
+        public static void Info(string info)
+        {
+            LogMessage(info, MessageLevel.Info);
+        }
+
+        public static void Error(string error, Exception ex)
+        {
+            LogMessage(string.Format("{0}{1}{2}", ex.Message, Environment.NewLine, error), MessageLevel.Error);
+        }
+
+        private static void LogMessage(string message, MessageLevel level)
+        {
+            Console.WriteLine(message);
+            Trace.WriteLine(message);
+
+            if (level != MessageLevel.Info)
+            {
+                AppendToLogFile(message, level);
+                if (Debugger.IsAttached && level == MessageLevel.Error)
+                    Debugger.Break();
+            }
+        }
+
+        //TODO
+        private static void AppendToLogFile(string message, MessageLevel level)
+        {
+
         }
     }
 }
