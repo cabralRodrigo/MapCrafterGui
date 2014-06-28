@@ -15,7 +15,7 @@ namespace MapCrafterGUI.Helpers
 
         public static bool CreateTextFile(string path, string text, bool replaceFileIfExists)
         {
-            bool erroOnCreate = false;
+            bool errorOnCreate = false;
 
             try
             {
@@ -29,10 +29,10 @@ namespace MapCrafterGUI.Helpers
             }
             catch
             {
-                erroOnCreate = true;
+                errorOnCreate = true;
             }
 
-            return erroOnCreate;
+            return errorOnCreate;
         }
 
         public static string ReadFile(string path)
@@ -44,5 +44,6 @@ namespace MapCrafterGUI.Helpers
         {
             return new FileInfo(path).Extension;
         }
+
     }
 }

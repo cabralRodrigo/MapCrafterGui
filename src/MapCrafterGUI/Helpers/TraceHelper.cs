@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 
 namespace MapCrafterGUI.Helpers
 {
@@ -40,10 +41,10 @@ namespace MapCrafterGUI.Helpers
             }
         }
 
-        //TODO
         private static void AppendToLogFile(string message, MessageLevel level)
         {
-
+            string messageToLog = string.Format("Level: {0}{1}Log: {2}", level.ToString(), Environment.NewLine, message);
+            Logger.Log(messageToLog);
         }
     }
 }

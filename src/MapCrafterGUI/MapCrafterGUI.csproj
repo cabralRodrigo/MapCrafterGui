@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\Logger.cs" />
     <Compile Include="MapCrafterGUIConfiguration\Configuration.cs" />
     <Compile Include="Dialogs\AddMap.cs">
       <SubType>Form</SubType>
