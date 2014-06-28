@@ -55,7 +55,7 @@ namespace MapCrafterGUI.Forms.Main
         }
         private void btnAddMap_Click(object sender, EventArgs e)
         {
-            using (AddMap addMapDialog = new AddMap(this.World))
+            using (frmAddMap addMapDialog = new frmAddMap(this.World))
                 if (addMapDialog.ShowDialog() == DialogResult.OK)
                     this.RefreshMapsList();
         }

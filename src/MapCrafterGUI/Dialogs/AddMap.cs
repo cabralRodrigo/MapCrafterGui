@@ -15,11 +15,11 @@ using System.Windows.Forms;
 
 namespace MapCrafterGUI.Dialogs
 {
-    public partial class AddMap : Form
+    public partial class frmAddMap : Form
     {
         private readonly WorldConfiguration world;
 
-        public AddMap(WorldConfiguration world)
+        public frmAddMap(WorldConfiguration world)
         {
             InitializeComponent();
             this.world = world;
@@ -27,6 +27,14 @@ namespace MapCrafterGUI.Dialogs
             this.cbRenderMode.DataSource = UtilHelper.ConvertEnumToDictionary<RenderMode>(true).Select(s => s.Value).ToList();
 
             this.PopulateRotations();
+
+            this.SetLocalizedField(LanguageControlField.Text);
+            this.lblWorldName.SetLocalizedField(LanguageControlField.Text);
+            this.lblMapName.SetLocalizedField(LanguageControlField.Text);
+            this.lblRotations.SetLocalizedField(LanguageControlField.Text);
+            this.lblRenderMode.SetLocalizedField(LanguageControlField.Text);
+            this.btnAdd.SetLocalizedField(LanguageControlField.Text);
+            this.btnCancel.SetLocalizedField(LanguageControlField.Text);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
