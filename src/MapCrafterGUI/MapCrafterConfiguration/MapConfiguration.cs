@@ -24,25 +24,20 @@ namespace MapCrafterGUI.MapCrafterConfiguration
             this.Rotations = new List<MapRotation>();
             this.AddRotation(MapConfiguration.DefaultRotation);
         }
-
         public void AddRotation(MapRotation rotation)
         {
             if (!this.Rotations.Contains(rotation))
                 this.Rotations.Add(rotation);
         }
-
         public void RemoveRotation(MapRotation rotation)
         {
             if (this.Rotations.Contains(rotation))
                 this.Rotations.Remove(rotation);
         }
-
         public MapRotation[] GetRotations()
         {
             return this.Rotations.Distinct().ToArray();
         }
-
-
         public string ToString(WorldConfiguration world)
         {
             StringBuilder sb = new StringBuilder();
@@ -60,7 +55,7 @@ namespace MapCrafterGUI.MapCrafterConfiguration
             StringBuilder sb = new StringBuilder();
 
             if (this.GetRotations().Length == 0)
-                sb.Append(" " + MapConfiguration.DefaultRotation.ToString());
+                sb.Append(" " + UtilHelper.GetEnumValue(MapConfiguration.DefaultRotation));
             else
                 foreach (var rotation in this.GetRotations())
                     sb.Append(" " + UtilHelper.GetEnumValue(rotation));
