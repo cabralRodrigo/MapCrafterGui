@@ -5,25 +5,25 @@ namespace MapCrafterGUI.Helpers
 {
     public class Logger
     {
-        public static string FolderOfLogFile
+        public static string LogFileFolder
         {
             get
             {
                 return Path.Combine(IOHelper.FolderOfApplication, "log");
             }
         }
-        public static string FullNameOfLogFile
+        public static string LogFileName
         {
             get
             {
-                return Path.Combine(Logger.FolderOfLogFile, DateTime.Now.ToString("yyyy.MM.dd") + ".log");
+                return Path.Combine(Logger.LogFileFolder, DateTime.Now.ToString("yyyy.MM.dd") + ".log");
             }
         }
 
         private static void CreateLogFolder()
         {
-            if (!Directory.Exists(Logger.FolderOfLogFile))
-                Directory.CreateDirectory(Logger.FolderOfLogFile);
+            if (!Directory.Exists(Logger.LogFileFolder))
+                Directory.CreateDirectory(Logger.LogFileFolder);
         }
 
         public static void Log(string textToLog)
@@ -31,7 +31,7 @@ namespace MapCrafterGUI.Helpers
             if (!string.IsNullOrEmpty(textToLog))
             {
                 Logger.CreateLogFolder();
-                File.AppendAllText(Logger.FullNameOfLogFile, string.Format("{0}{1}{2}{1}{1}", DateTime.Now.ToString("HH:mm:ss.fff"), Environment.NewLine, textToLog));
+                File.AppendAllText(Logger.LogFileName, string.Format("{0}{1}{2}{1}{1}", DateTime.Now.ToString("HH:mm:ss.fff"), Environment.NewLine, textToLog));
             }
         }
     }
