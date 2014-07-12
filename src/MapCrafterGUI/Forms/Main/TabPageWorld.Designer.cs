@@ -38,7 +38,6 @@
             this.headerName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.hearderRenderMode = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnAddMap = new System.Windows.Forms.Button();
-
             this.SuspendLayout();
             // 
             // lblWorldInput
@@ -47,9 +46,9 @@
             this.lblWorldInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblWorldInput.Location = new System.Drawing.Point(10, 9);
             this.lblWorldInput.Name = "lblWorldInput";
-            this.lblWorldInput.Size = new System.Drawing.Size(79, 13);
+            this.lblWorldInput.Size = new System.Drawing.Size(82, 13);
             this.lblWorldInput.TabIndex = 0;
-            this.lblWorldInput.Text = "World Folder";
+            this.lblWorldInput.Text = "lblWorldInput";
             // 
             // lblTextWorldInput
             // 
@@ -75,9 +74,19 @@
             this.lblWorldName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblWorldName.Location = new System.Drawing.Point(10, 44);
             this.lblWorldName.Name = "lblWorldName";
-            this.lblWorldName.Size = new System.Drawing.Size(76, 13);
+            this.lblWorldName.Size = new System.Drawing.Size(85, 13);
             this.lblWorldName.TabIndex = 2;
-            this.lblWorldName.Text = "World Name";
+            this.lblWorldName.Text = "lblWorldName";
+            // 
+            // lblDimension
+            // 
+            this.lblDimension.AutoSize = true;
+            this.lblDimension.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDimension.Location = new System.Drawing.Point(10, 80);
+            this.lblDimension.Name = "lblDimension";
+            this.lblDimension.Size = new System.Drawing.Size(78, 13);
+            this.lblDimension.TabIndex = 4;
+            this.lblDimension.Text = "lblDimension";
             // 
             // lblTextDimension
             // 
@@ -88,19 +97,11 @@
             this.lblTextDimension.TabIndex = 5;
             this.lblTextDimension.Text = "lblTextDimension";
             // 
-            // lblDimension
-            // 
-            this.lblDimension.AutoSize = true;
-            this.lblDimension.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblDimension.Location = new System.Drawing.Point(10, 80);
-            this.lblDimension.Name = "lblDimension";
-            this.lblDimension.Size = new System.Drawing.Size(65, 13);
-            this.lblDimension.TabIndex = 4;
-            this.lblDimension.Text = "Dimension";
-            // 
             // lstMaps
             // 
-            this.lstMaps.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] { this.headerName, this.hearderRenderMode });
+            this.lstMaps.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.headerName,
+            this.hearderRenderMode});
             this.lstMaps.FullRowSelect = true;
             this.lstMaps.GridLines = true;
             this.lstMaps.Location = new System.Drawing.Point(13, 124);
@@ -114,7 +115,7 @@
             // headerName
             // 
             this.headerName.Text = "Map Name";
-            this.headerName.Width = 100;
+            this.headerName.Width = 120;
             // 
             // hearderRenderMode
             // 
@@ -123,13 +124,15 @@
             // 
             // btnAddMap
             // 
-            this.btnAddMap.Location = new System.Drawing.Point(498, 95);
+            this.btnAddMap.Location = new System.Drawing.Point(469, 95);
             this.btnAddMap.Name = "btnAddMap";
-            this.btnAddMap.Size = new System.Drawing.Size(75, 23);
+            this.btnAddMap.Size = new System.Drawing.Size(104, 23);
             this.btnAddMap.TabIndex = 7;
-            this.btnAddMap.Text = "Add Map";
+            this.btnAddMap.Text = "btnAddMap";
             this.btnAddMap.UseVisualStyleBackColor = true;
-
+            // 
+            // TabPageWorld
+            // 
             this.Controls.Add(this.lblTextWorldName);
             this.Controls.Add(this.lblWorldName);
             this.Controls.Add(this.lblTextWorldInput);
@@ -138,6 +141,11 @@
             this.Controls.Add(this.lblTextDimension);
             this.Controls.Add(this.lstMaps);
             this.Controls.Add(this.btnAddMap);
+            this.Name = "TabPageWorld";
+            this.Size = new System.Drawing.Size(585, 310);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         private System.Windows.Forms.Label lblTextWorldName;

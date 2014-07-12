@@ -1,9 +1,11 @@
 {
-    "Fields": {
+    "Fields": 
+    {
+
         "WorldConfiguration.Error.WorldFolderInvalid": "Pasta não existente",
         "WorldConfiguration.Error.LevelFileInvalid": "A pasta selecionada não contém o arquivo 'level.dat'.",
         "WorldConfiguration.Error.WorldNameInvalid": "Nome inválido para o mundo",
-       
+        
         "Dimension.Overworld": "Mundo Superior",
         "Dimension.Nether": "Inferno",
         "Dimension.End": "O Fim",
@@ -12,12 +14,12 @@
         "MapRotation.TopRight": "Topo-Direita",
         "MapRotation.BottomLeft": "Base-Esquerda",
         "MapRotation.BottomRight": "Base-Direita",
-       
+        
         "RenderMode.Normal": "Normal",
         "RenderMode.DayLight": "Dia",
         "RenderMode.NightLight": "Noite",
         "RenderMode.Cave": "Caverna",
-       
+      
         "frmAddWorld.Text": "Adicionar Mundo",
         "frmAddWorld.lblDimension.Text": "Dimensão",
         "frmAddWorld.lblInputFolder.Text": "Diretório",
@@ -26,18 +28,25 @@
         "frmAddWorld.btnCancel.Text": "Cancelar",
         "frmAddWorld.btnInputFolder.Text": "Procurar",
         "frmAddWorld.folderDialog.Description": "Selecione a pasta que contém o mundo",
-       
+        
         "frmMain.Error.ErrorOnOpeningFile": "Ocorreu um erro ao abrir esse projeto.{LineBreak}Por favor, tente abrir outro projeto.",
         "frmMain.Error.ErrorOnOpeningFileCaption": "Erro ao abrir o projeto",
         "frmMain.Info.WorldInfoInvalid": "Um ou mais mundos do projeto carregado são inválidos.{LineBreak}Veja mais detalhes nas informações do mundo.",
         "frmMain.Info.WorldInfoInvalidCaption": "Erro ao abrir o projeto",
-      
+        
         "frmAddMap.Text": "Adicionar Mapa",
         "frmAddMap.lblWorldName.Text": "Mundo Selecionado",
         "frmAddMap.lblMapName.Text": "Nome do Mapa",
         "frmAddMap.lblRotations.Text": "Rotações do Mapa",
         "frmAddMap.lblRenderMode.Text": "Modo de Renderização",
         "frmAddMap.btnAdd.Text": "OK",
-        "frmAddMap.btnCancel.Text": "Cancelar"
+        "frmAddMap.btnCancel.Text": "Cancelar",
+
+        "TabPageWorld.lblWorldInput.Text": "Diretório do Mundo",
+        "TabPageWorld.btnAddMap.Text": "Adicionar Mapa",
+        "TabPageWorld.lblDimension.Text": "Dimensão",
+        "TabPageWorld.lblWorldName.Text":  "Mundo",
+        "TabPageWorld.headerRenderMode.Text":  "Modo de Renderização",
+        "TabPageWorld.headerName.Text":  "Nome"
     }
 }
