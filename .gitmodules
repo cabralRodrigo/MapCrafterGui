@@ -1,0 +1,3 @@
+[submodule "src/NbtSharp"]
+	path = src/NbtSharp
+	url = https://github.com/cabralRodrigo/NbtSharp.git
