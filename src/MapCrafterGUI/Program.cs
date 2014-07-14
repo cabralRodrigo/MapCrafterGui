@@ -18,9 +18,15 @@ namespace MapCrafterGUI
             Application.Run(new frmMain());
         }
 
+        /// <summary>
+        /// Init common stuff for the application
+        /// </summary>
         static void InitProgram()
         {
-            LanguageFile.LoadLanguageFile(new CultureInfo("pt-BR"));
+            //Init of the localization system
+            LanguageFile.LoadLanguageFile(CultureInfo.CurrentUICulture, new CultureInfo("en-US"));
+
+            //Init of the configuration system
             Configuration.InitConfiguration();
         }
     }
