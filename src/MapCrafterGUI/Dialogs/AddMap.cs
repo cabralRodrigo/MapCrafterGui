@@ -3,15 +3,8 @@ using MapCrafterGUI.Helpers;
 using MapCrafterGUI.LanguageHandler;
 using MapCrafterGUI.MapCrafterConfiguration;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-
 
 namespace MapCrafterGUI.Dialogs
 {
@@ -37,12 +30,6 @@ namespace MapCrafterGUI.Dialogs
             this.btnCancel.SetLocalizedField(LanguageControlField.Text);
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
-        }
-
         private void btnAdd_Click(object sender, EventArgs e)
         {
             //TODO: do a validation here
@@ -61,6 +48,12 @@ namespace MapCrafterGUI.Dialogs
             this.Close();
         }
 
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
+       
         private void PopulateRotations()
         {
             foreach (var rotation in UtilHelper.ConvertEnumToDictionary<MapRotation>(false))

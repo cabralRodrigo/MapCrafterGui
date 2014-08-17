@@ -12,8 +12,6 @@ namespace MapCrafterGUI.MapCrafterGUIConfiguration
         #region Static Members
 
         private static Configuration _instance;
-        public static Configuration instance { get { return _instance; } }
-
         public Configuration()
         {
             this.savePropertiesOnChanged = false;
@@ -26,16 +24,18 @@ namespace MapCrafterGUI.MapCrafterGUIConfiguration
                 return Path.Combine(IOHelper.FolderOfApplication, Info.APPLICATION_CONFIGURATION_FILE);
             }
         }
-        public static void InitConfiguration()
-        {
-            Configuration.SetInstance(Configuration.LoadConfigurationFromFile());
-        }
+
+        public static Configuration instance { get { return _instance; } }
         public static Configuration GetDefaultConfiguration()
         {
             Configuration defaultConfig = new Configuration();
             return defaultConfig;
         }
 
+        public static void InitConfiguration()
+        {
+            Configuration.SetInstance(Configuration.LoadConfigurationFromFile());
+        }
         private static void CreateConfigurationFile()
         {
             if (!File.Exists(ConfigurationFilePath))
@@ -86,6 +86,18 @@ namespace MapCrafterGUI.MapCrafterGUIConfiguration
             }
         }
 
+        [OnDeserialized]
+        internal void OnDeserialized(StreamingContext context)
+        {
+            this.savePropertiesOnChanged = true;
+        }
+
+        [OnDeserializing]
+        internal void OnDeserializing(StreamingContext context)
+        {
+            this.savePropertiesOnChanged = false;
+        }
+
         private void SetPropertyAndSaveConfigFile<T>(ref T property, T value, [CallerMemberName] string propertyName = null)
         {
             bool isEqual = UtilHelper.CompareObjects(property, value);
@@ -97,18 +109,6 @@ namespace MapCrafterGUI.MapCrafterGUIConfiguration
                 this.SaveConfiguration();
             }
             
-        }
-
-        [OnDeserializing]
-        internal void OnDeserializing(StreamingContext context)
-        {
-            this.savePropertiesOnChanged = false;
-        }
-
-        [OnDeserialized]
-        internal void OnDeserialized(StreamingContext context)
-        {
-            this.savePropertiesOnChanged = true;
         }
     }
 }

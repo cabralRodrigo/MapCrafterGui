@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 
 namespace MapCrafterGUI.Helpers
 {
@@ -13,9 +12,9 @@ namespace MapCrafterGUI.Helpers
             Error
         }
 
-        public static void Warning(string warning)
+        public static void Error(string error, Exception ex)
         {
-            LogMessage(warning, MessageLevel.Warning);
+            LogMessage(string.Format("{0}{1}{2}", ex.Message, Environment.NewLine, error), MessageLevel.Error);
         }
 
         public static void Info(string info)
@@ -23,9 +22,15 @@ namespace MapCrafterGUI.Helpers
             LogMessage(info, MessageLevel.Info);
         }
 
-        public static void Error(string error, Exception ex)
+        public static void Warning(string warning)
         {
-            LogMessage(string.Format("{0}{1}{2}", ex.Message, Environment.NewLine, error), MessageLevel.Error);
+            LogMessage(warning, MessageLevel.Warning);
+        }
+
+        private static void AppendToLogFile(string message, MessageLevel level)
+        {
+            string messageToLog = string.Format("Level: {0}{1}Log: {2}", level.ToString(), Environment.NewLine, message);
+            Logger.Log(messageToLog);
         }
 
         private static void LogMessage(string message, MessageLevel level)
@@ -39,12 +44,6 @@ namespace MapCrafterGUI.Helpers
                 if (Debugger.IsAttached && level == MessageLevel.Error)
                     Debugger.Break();
             }
-        }
-
-        private static void AppendToLogFile(string message, MessageLevel level)
-        {
-            string messageToLog = string.Format("Level: {0}{1}Log: {2}", level.ToString(), Environment.NewLine, message);
-            Logger.Log(messageToLog);
         }
     }
 }

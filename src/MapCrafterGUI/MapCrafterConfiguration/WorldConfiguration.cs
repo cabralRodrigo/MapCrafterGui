@@ -22,6 +22,11 @@ namespace MapCrafterGUI.MapCrafterConfiguration
             this.Maps = new List<MapConfiguration>();
         }
 
+        public Dimension Dimension { get; set; }
+        public string InputFolder { get; set; }
+        public List<MapConfiguration> Maps { get; set; }
+        public string Name { get; set; }
+
         public static bool Validate_FolderWorld(string worldFolder)
         {
             return Directory.Exists(worldFolder);
@@ -34,11 +39,10 @@ namespace MapCrafterGUI.MapCrafterConfiguration
         {
             return !string.IsNullOrEmpty(worldName);
         }
-
-        public string InputFolder { get; set; }
-        public string Name { get; set; }
-        public Dimension Dimension { get; set; }
-        public List<MapConfiguration> Maps { get; set; }
+        public bool IsWorldValid()
+        {
+            return Validate_FolderWorld(this.InputFolder) && Validate_LevelFile(this.InputFolder);
+        }
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -52,11 +56,7 @@ namespace MapCrafterGUI.MapCrafterConfiguration
 
             return sb.ToString();
         }
-        public bool IsWorldValid()
-        {
-            return Validate_FolderWorld(this.InputFolder) && Validate_LevelFile(this.InputFolder);
-        }
-
+        
         [OnDeserialized]
         internal void OnDeserialized(StreamingContext context)
         {

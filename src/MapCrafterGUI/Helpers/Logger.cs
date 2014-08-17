@@ -12,18 +12,13 @@ namespace MapCrafterGUI.Helpers
                 return Path.Combine(IOHelper.FolderOfApplication, "log");
             }
         }
+       
         public static string LogFileName
         {
             get
             {
                 return Path.Combine(Logger.LogFileFolder, DateTime.Now.ToString("yyyy.MM.dd") + ".log");
             }
-        }
-
-        private static void CreateLogFolder()
-        {
-            if (!Directory.Exists(Logger.LogFileFolder))
-                Directory.CreateDirectory(Logger.LogFileFolder);
         }
 
         public static void Log(string textToLog)
@@ -33,6 +28,12 @@ namespace MapCrafterGUI.Helpers
                 Logger.CreateLogFolder();
                 File.AppendAllText(Logger.LogFileName, string.Format("{0}{1}{2}{1}{1}", DateTime.Now.ToString("HH:mm:ss.fff"), Environment.NewLine, textToLog));
             }
+        }
+
+        private static void CreateLogFolder()
+        {
+            if (!Directory.Exists(Logger.LogFileFolder))
+                Directory.CreateDirectory(Logger.LogFileFolder);
         }
     }
 }

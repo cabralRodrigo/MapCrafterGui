@@ -30,12 +30,6 @@ namespace MapCrafterGUI.Dialogs
             this.folderDialog.Description = Language.GetLocalizedStringRaw("frmAddWorld.folderDialog.Description");
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
-        }
-
         private void btnAdd_Click(object sender, EventArgs e)
         {
             if (txtInputValidate() & txtWorldNameValidate())
@@ -47,6 +41,12 @@ namespace MapCrafterGUI.Dialogs
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
         }
 
         private void btnInputFolder_Click(object sender, EventArgs e)
@@ -62,10 +62,6 @@ namespace MapCrafterGUI.Dialogs
         private void txtInputFolder_Validating(object sender, CancelEventArgs e)
         {
             txtInputValidate();
-        }
-        private void txtWorldName_Validating(object sender, CancelEventArgs e)
-        {
-            txtWorldNameValidate();
         }
 
         private bool txtInputValidate()
@@ -97,6 +93,12 @@ namespace MapCrafterGUI.Dialogs
 
             return !error;
         }
+
+        private void txtWorldName_Validating(object sender, CancelEventArgs e)
+        {
+            txtWorldNameValidate();
+        }
+
         private bool txtWorldNameValidate()
         {
             bool error = !WorldConfiguration.Validate_WorldName(txtWorldName.Text);

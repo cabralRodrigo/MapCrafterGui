@@ -1,6 +1,5 @@
 ﻿using MapCrafterGUI.Helpers;
 using System;
-using System.ComponentModel;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -14,6 +13,64 @@ namespace MapCrafterGUI.LanguageHandler
             string defaultValue = UtilHelper.GetEnumDescription(en);
 
             return GetLocalizedStringRaw(nameOnFile, defaultValue);
+        }
+
+        public static string GetLocalizedFieldForControl(Control control, LanguageControlField controlField)
+        {
+            return GetLocalizedFieldForControl(control, controlField, string.Empty, null);
+        }
+        public static string GetLocalizedFieldForControl(Control control, LanguageControlField controlField, object metadata)
+        {
+            return GetLocalizedFieldForControl(control, controlField, string.Empty, metadata);
+        }
+        public static string GetLocalizedFieldForControl(Control control, LanguageControlField controlField, string defaultValue)
+        {
+            return GetLocalizedFieldForControl(control, controlField, defaultValue, null);
+        }
+        public static string GetLocalizedFieldForControl(Control control, LanguageControlField controlField, string defaultValue, object metadata)
+        {
+            string fieldNameOnLanguageFile = GetFieldNameOnLanguageFileForControl(control, controlField);
+            string fieldValue = GetLocalizedStringRaw(fieldNameOnLanguageFile, defaultValue);
+
+            return UtilHelper.StringReplaceWithMetadata(fieldValue, metadata);
+        }
+
+        public static string GetLocalizedGenericFieldForControl(Control control, LanguageGenericField genericField, string fieldDetails)
+        {
+            return GetLocalizedGenericFieldForControl(control, genericField, fieldDetails, string.Empty, null);
+        }
+        public static string GetLocalizedGenericFieldForControl(Control control, LanguageGenericField genericField, string fieldDetails, object metadata)
+        {
+            return GetLocalizedGenericFieldForControl(control, genericField, fieldDetails, string.Empty, metadata);
+        }
+        public static string GetLocalizedGenericFieldForControl(Control control, LanguageGenericField genericField, string fieldDetails, string defaultValue)
+        {
+            return GetLocalizedGenericFieldForControl(control, genericField, fieldDetails, defaultValue, null);
+        }
+        public static string GetLocalizedGenericFieldForControl(Control control, LanguageGenericField genericField, string fieldDetails, string defaultValue, object metadata)
+        {
+            string fieldNameOnLanguageFile = GetGenericFieldNameOnLanguegFileForControl(control, genericField, fieldDetails);
+            string fieldValue = GetLocalizedStringRaw(fieldNameOnLanguageFile, defaultValue);
+
+            return UtilHelper.StringReplaceWithMetadata(fieldValue, metadata);
+        }
+
+        public static string GetLocalizedStringRaw(string fieldName)
+        {
+            return GetLocalizedStringRaw(fieldName, string.Empty, null);
+        }
+        public static string GetLocalizedStringRaw(string fieldName, object metadata)
+        {
+            return GetLocalizedStringRaw(fieldName, string.Empty, metadata);
+        }
+        public static string GetLocalizedStringRaw(string fieldName, string defaultValue)
+        {
+            return GetLocalizedStringRaw(fieldName, defaultValue, null);
+        }
+        public static string GetLocalizedStringRaw(string fieldName, string defaultValue, object metadata)
+        {
+            string localizedString = LanguageFile.instance.GetFieldValue(fieldName, defaultValue);
+            return UtilHelper.StringReplaceWithMetadata(localizedString, metadata);
         }
 
         public static void SetLocalizedField(this Control control, LanguageControlField field)
@@ -38,76 +95,6 @@ namespace MapCrafterGUI.LanguageHandler
             prop.SetValue(control, newPropValue);
         }
 
-        public static string GetLocalizedGenericFieldForControl(Control control, LanguageGenericField genericField, string fieldDetails)
-        {
-            return GetLocalizedGenericFieldForControl(control, genericField, fieldDetails, string.Empty, null);
-        }
-        public static string GetLocalizedGenericFieldForControl(Control control, LanguageGenericField genericField, string fieldDetails, object metadata)
-        {
-            return GetLocalizedGenericFieldForControl(control, genericField, fieldDetails, string.Empty, metadata);
-        }
-        public static string GetLocalizedGenericFieldForControl(Control control, LanguageGenericField genericField, string fieldDetails, string defaultValue)
-        {
-            return GetLocalizedGenericFieldForControl(control, genericField, fieldDetails, defaultValue, null);
-        }
-        public static string GetLocalizedGenericFieldForControl(Control control, LanguageGenericField genericField, string fieldDetails, string defaultValue, object metadata)
-        {
-            string fieldNameOnLanguageFile = GetGenericFieldNameOnLanguegFileForControl(control, genericField, fieldDetails);
-            string fieldValue = GetLocalizedStringRaw(fieldNameOnLanguageFile, defaultValue);
-
-            return UtilHelper.StringReplaceWithMetadata(fieldValue, metadata);
-        }
-
-        public static string GetLocalizedFieldForControl(Control control, LanguageControlField controlField)
-        {
-            return GetLocalizedFieldForControl(control, controlField, string.Empty, null);
-        }
-        public static string GetLocalizedFieldForControl(Control control, LanguageControlField controlField, object metadata)
-        {
-            return GetLocalizedFieldForControl(control, controlField, string.Empty, metadata);
-        }
-        public static string GetLocalizedFieldForControl(Control control, LanguageControlField controlField, string defaultValue)
-        {
-            return GetLocalizedFieldForControl(control, controlField, defaultValue, null);
-        }
-        public static string GetLocalizedFieldForControl(Control control, LanguageControlField controlField, string defaultValue, object metadata)
-        {
-            string fieldNameOnLanguageFile = GetFieldNameOnLanguageFileForControl(control, controlField);
-            string fieldValue = GetLocalizedStringRaw(fieldNameOnLanguageFile, defaultValue);
-
-            return UtilHelper.StringReplaceWithMetadata(fieldValue, metadata);
-        }
-
-        public static string GetLocalizedStringRaw(string fieldName)
-        {
-            return GetLocalizedStringRaw(fieldName, string.Empty, null);
-        }
-        public static string GetLocalizedStringRaw(string fieldName, object metadata)
-        {
-            return GetLocalizedStringRaw(fieldName, string.Empty, metadata);
-        }
-        public static string GetLocalizedStringRaw(string fieldName, string defaultValue)
-        {
-            return GetLocalizedStringRaw(fieldName, defaultValue, null);
-        }
-        public static string GetLocalizedStringRaw(string fieldName, string defaultValue, object metadata)
-        {
-            string localizedString = LanguageFile.instance.GetFieldValue(fieldName, defaultValue);
-            return UtilHelper.StringReplaceWithMetadata(localizedString, metadata);
-        }
-
-        private static string GetGenericFieldNameOnLanguegFileForControl(Control control, LanguageGenericField genericField, string fieldDetails)
-        {
-            if (control == null)
-                return string.Empty;
-
-            string controlName = (control.GetType().GetProperty("Name").GetValue(control) ?? string.Empty).ToString();
-
-            if (string.IsNullOrEmpty(controlName))
-                return string.Empty;
-
-            return string.Format("{0}.{1}.{2}", controlName, genericField.ToString(), fieldDetails);
-        }
         private static string GetFieldNameOnLanguageFileForControl(Control control, LanguageControlField field)
         {
             if (control == null)
@@ -134,6 +121,18 @@ namespace MapCrafterGUI.LanguageHandler
             string enumItem = en.ToString();
 
             return string.Format("{0}.{1}", enumClass, enumItem);
+        }
+        private static string GetGenericFieldNameOnLanguegFileForControl(Control control, LanguageGenericField genericField, string fieldDetails)
+        {
+            if (control == null)
+                return string.Empty;
+
+            string controlName = (control.GetType().GetProperty("Name").GetValue(control) ?? string.Empty).ToString();
+
+            if (string.IsNullOrEmpty(controlName))
+                return string.Empty;
+
+            return string.Format("{0}.{1}.{2}", controlName, genericField.ToString(), fieldDetails);
         }
     }
 }

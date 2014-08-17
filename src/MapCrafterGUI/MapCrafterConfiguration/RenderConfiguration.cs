@@ -8,6 +8,15 @@ namespace MapCrafterGUI.MapCrafterConfiguration
     public class RenderConfiguration
     {
         private static RenderConfiguration _instance;
+
+        public RenderConfiguration(string fileName, string outputFolder)
+        {
+            this.FileName = fileName;
+            this.OutputFolder = outputFolder;
+            this.Worlds = new List<WorldConfiguration>();
+            this.BackgroudColor = UtilHelper.GetColorFromHtmlColor("#DDDDDD");
+        }
+
         public static RenderConfiguration instance
         {
             get
@@ -18,6 +27,11 @@ namespace MapCrafterGUI.MapCrafterConfiguration
                 return _instance;
             }
         }
+        public Color BackgroudColor { get; set; }
+        public string FileName { get; set; }
+        public string OutputFolder { get; set; }
+        public List<WorldConfiguration> Worlds { get; set; }
+
         public static bool LoadFromFile(string path)
         {
             RenderConfiguration newConfig;
@@ -31,22 +45,6 @@ namespace MapCrafterGUI.MapCrafterConfiguration
         {
             _instance = config;
         }
-
-        public RenderConfiguration(string fileName, string outputFolder)
-        {
-            this.FileName = fileName;
-            this.OutputFolder = outputFolder;
-            this.Worlds = new List<WorldConfiguration>();
-            this.BackgroudColor = UtilHelper.GetColorFromHtmlColor("#DDDDDD");
-        }
-
-        public string FileName { get; set; }
-        public string OutputFolder { get; set; }
-        public Color BackgroudColor { get; set; }
-        public List<WorldConfiguration> Worlds { get; set; }
-
-        //TODO : public List<MarkerConfiguration> Markers { get; set; }
-
         public string GenerateConfigurationFile()
         {
             StringBuilder sb = new StringBuilder();
@@ -60,6 +58,5 @@ namespace MapCrafterGUI.MapCrafterConfiguration
 
             return sb.ToString();
         }
-  
     }
 }

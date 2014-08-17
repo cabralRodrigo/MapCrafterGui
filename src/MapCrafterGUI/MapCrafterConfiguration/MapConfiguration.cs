@@ -11,11 +11,6 @@ namespace MapCrafterGUI.MapCrafterConfiguration
     {
         public static MapRotation DefaultRotation = MapRotation.TopLeft;
 
-        public Guid MapID { get; set; }
-        public string Name { get; set; }
-        public RenderMode RenderMode { get; set; }
-        private List<MapRotation> Rotations { get; set; }
-
         public MapConfiguration(string name, WorldConfiguration world)
         {
             this.MapID = Guid.NewGuid();
@@ -24,19 +19,25 @@ namespace MapCrafterGUI.MapCrafterConfiguration
             this.Rotations = new List<MapRotation>();
             this.AddRotation(MapConfiguration.DefaultRotation);
         }
+
+        public Guid MapID { get; set; }
+        public string Name { get; set; }
+        public RenderMode RenderMode { get; set; }
+        private List<MapRotation> Rotations { get; set; }
+        
         public void AddRotation(MapRotation rotation)
         {
             if (!this.Rotations.Contains(rotation))
                 this.Rotations.Add(rotation);
         }
+        public MapRotation[] GetRotations()
+        {
+            return this.Rotations.Distinct().ToArray();
+        }
         public void RemoveRotation(MapRotation rotation)
         {
             if (this.Rotations.Contains(rotation))
                 this.Rotations.Remove(rotation);
-        }
-        public MapRotation[] GetRotations()
-        {
-            return this.Rotations.Distinct().ToArray();
         }
         public string ToString(WorldConfiguration world)
         {
@@ -62,6 +63,5 @@ namespace MapCrafterGUI.MapCrafterConfiguration
 
             return sb.ToString();
         }
-
     }
 }

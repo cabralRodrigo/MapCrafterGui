@@ -35,15 +35,14 @@ namespace MapCrafterGUI.Helpers
             return errorOnCreate;
         }
 
-        public static string ReadFile(string path)
-        {
-            return File.ReadAllText(path);
-        }
-
         public static string GetFileExtension(string path)
         {
             return new FileInfo(path).Extension;
         }
 
+        public static string ReadFile(string path)
+        {
+            return File.ReadAllText(path);
+        }
     }
 }

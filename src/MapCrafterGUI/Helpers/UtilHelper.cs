@@ -11,14 +11,20 @@ namespace MapCrafterGUI.Helpers
 {
     public static class UtilHelper
     {
-        public static Color GetColorFromHtmlColor(string htmlColor)
+        public static bool CompareObjects<T>(T obj1, T obj2)
         {
-            return ColorTranslator.FromHtml(htmlColor);
-        }
+            bool equals = false;
 
-        public static string GetHexCodeFromColor(Color color)
-        {
-            return string.Format("#{0}{1}{2}", color.R.ToString("X2"), color.G.ToString("X2"), color.B.ToString("X2"));
+            if (obj1 == null && obj2 == null)
+                equals = true;
+
+            if ((obj1 == null && obj2 != null) || (obj1 != null && obj2 != null))
+                equals = obj2.Equals(obj1);
+
+            if (obj2 == null && obj1 != null)
+                equals = obj1.Equals(obj2);
+
+            return equals;
         }
 
         public static Dictionary<int, string> ConvertEnumToDictionary<T>(bool useLocalizedEnumDescription) where T : IComparable, IFormattable, IConvertible
@@ -39,6 +45,36 @@ namespace MapCrafterGUI.Helpers
             return dicEnum;
         }
 
+        public static Color GetColorFromHtmlColor(string htmlColor)
+        {
+            return ColorTranslator.FromHtml(htmlColor);
+        }
+
+        public static string GetEnumDescription(Enum en)
+        {
+            string enumDescription = string.Empty;
+            DescriptionAttribute descAttribute = GetAttributesOfEnum<DescriptionAttribute>(en);
+            if (descAttribute != null)
+                enumDescription = descAttribute.Description;
+
+            return enumDescription;
+        }
+
+        public static string GetEnumValue(Enum en)
+        {
+            string enumValue = string.Empty;
+            DefaultValueAttribute valueAttribute = GetAttributesOfEnum<DefaultValueAttribute>(en);
+            if (valueAttribute != null)
+                enumValue = (valueAttribute.Value ?? string.Empty).ToString();
+
+            return enumValue;
+        }
+
+        public static string GetHexCodeFromColor(Color color)
+        {
+            return string.Format("#{0}{1}{2}", color.R.ToString("X2"), color.G.ToString("X2"), color.B.ToString("X2"));
+        }
+       
         public static bool LoadFileTypeFromFile<T>(string path, out T objectLoaded)
         {
             objectLoaded = default(T);
@@ -70,43 +106,7 @@ namespace MapCrafterGUI.Helpers
                 }
             return textWithMetadata;
         }
-
-        public static string GetEnumDescription(Enum en)
-        {
-            string enumDescription = string.Empty;
-            DescriptionAttribute descAttribute = GetAttributesOfEnum<DescriptionAttribute>(en);
-            if (descAttribute != null)
-                enumDescription = descAttribute.Description;
-
-            return enumDescription;
-        }
-
-        public static string GetEnumValue(Enum en)
-        {
-            string enumValue = string.Empty;
-            DefaultValueAttribute valueAttribute = GetAttributesOfEnum<DefaultValueAttribute>(en);
-            if (valueAttribute != null)
-                enumValue = (valueAttribute.Value ?? string.Empty).ToString();
-
-            return enumValue;
-        }
-
-        public static bool CompareObjects<T>(T obj1, T obj2)
-        {
-            bool equals = false;
-
-            if (obj1 == null && obj2 == null)
-                equals = true;
-
-            if ((obj1 == null && obj2 != null) || (obj1 != null && obj2 != null))
-                equals = obj2.Equals(obj1);
-
-            if (obj2 == null && obj1 != null)
-                equals = obj1.Equals(obj2);
-
-            return equals;
-        }
-
+        
         private static T GetAttributesOfEnum<T>(Enum en) where T : Attribute
         {
             return en.GetType().GetField(en.ToString()).GetCustomAttribute<T>();

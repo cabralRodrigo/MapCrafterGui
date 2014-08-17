@@ -1,24 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using MapCrafterGUI.Helpers;
-using MapCrafterGUI.Dialogs;
+﻿using MapCrafterGUI.Dialogs;
 using MapCrafterGUI.Forms.Main;
+using MapCrafterGUI.Helpers;
+using MapCrafterGUI.LanguageHandler;
 using MapCrafterGUI.MapCrafterConfiguration;
 using Newtonsoft.Json;
-using MapCrafterGUI.LanguageHandler;
+using System;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace MapCrafterGUI.Forms
 {
     public partial class frmMain : Form
     {
-        private RenderConfiguration config { get { return RenderConfiguration.instance; } }
         public frmMain()
         {
             InitializeComponent();
@@ -31,51 +24,13 @@ namespace MapCrafterGUI.Forms
             dialogOpenProject.Filter = string.Format("MapCrafterGui Project|*.{0}", Info.PROJECT_FILE_EXTENSION);
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-        }
-
+        private RenderConfiguration config { get { return RenderConfiguration.instance; } }
+       
         private void btnAddWorld_Click(object sender, EventArgs e)
         {
             using (frmAddWorld addWorldDialog = new frmAddWorld(config))
                 if (addWorldDialog.ShowDialog() == DialogResult.OK)
                     RefreshForm();
-        }
-
-        private void RefreshForm()
-        {
-            this.lblRenderConfigurarionName.Text = config.FileName;
-            this.lblRenderConfigurationOutput.Text = config.OutputFolder;
-            this.pnBackgroundColor.BackColor = config.BackgroudColor;
-            tabsWorlds.Controls.Clear();
-
-            foreach (WorldConfiguration world in config.Worlds)
-                tabsWorlds.Controls.Add(new TabPageWorld(world));
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            var ser = JsonConvert.SerializeObject(this.config);
-            this.RefreshForm();
-            config.GenerateConfigurationFile();
-        }
-
-        private void listView1_ItemActivate(object sender, EventArgs e)
-        {
-            var item = ((ListView)sender).FocusedItem;
-
-            var item2 = item as ListViewItemMap;
-
-        }
-
-        private void pnBackgroundColor_Click(object sender, EventArgs e)
-        {
-            dialogBackgroundColor.Color = config.BackgroudColor;
-            if (dialogBackgroundColor.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                this.config.BackgroudColor = dialogBackgroundColor.Color;
-                this.RefreshForm();
-            }
         }
 
         private void btnRenderCondigurationOutput_Click(object sender, EventArgs e)
@@ -88,11 +43,22 @@ namespace MapCrafterGUI.Forms
             }
         }
 
-        private void saveConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-            dialogSaveProject.InitialDirectory = Environment.CurrentDirectory;
-            if (dialogSaveProject.ShowDialog() == DialogResult.OK)
-                IOHelper.CreateTextFile(dialogSaveProject.FileName, JsonConvert.SerializeObject(this.config), true);
+            var ser = JsonConvert.SerializeObject(this.config);
+            this.RefreshForm();
+            config.GenerateConfigurationFile();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+        }
+    
+        private void listView1_ItemActivate(object sender, EventArgs e)
+        {
+            var item = ((ListView)sender).FocusedItem;
+
+            var item2 = item as ListViewItemMap;
 
         }
 
@@ -125,6 +91,35 @@ namespace MapCrafterGUI.Forms
         {
             RenderConfiguration.SetConfiguration(new RenderConfiguration(Info.RENDER_CONFIGURATION_FILE_NAME, Info.RENDER_CONFIGURATION_OUTPUT_FOLDER));
             this.RefreshForm();
+        }
+
+        private void pnBackgroundColor_Click(object sender, EventArgs e)
+        {
+            dialogBackgroundColor.Color = config.BackgroudColor;
+            if (dialogBackgroundColor.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                this.config.BackgroudColor = dialogBackgroundColor.Color;
+                this.RefreshForm();
+            }
+        }
+
+        private void RefreshForm()
+        {
+            this.lblRenderConfigurarionName.Text = config.FileName;
+            this.lblRenderConfigurationOutput.Text = config.OutputFolder;
+            this.pnBackgroundColor.BackColor = config.BackgroudColor;
+            tabsWorlds.Controls.Clear();
+
+            foreach (WorldConfiguration world in config.Worlds)
+                tabsWorlds.Controls.Add(new TabPageWorld(world));
+        }
+       
+        private void saveConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dialogSaveProject.InitialDirectory = Environment.CurrentDirectory;
+            if (dialogSaveProject.ShowDialog() == DialogResult.OK)
+                IOHelper.CreateTextFile(dialogSaveProject.FileName, JsonConvert.SerializeObject(this.config), true);
+
         }
     }
 }
