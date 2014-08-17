@@ -1,4 +1,5 @@
 ﻿using MapCrafterGUI.Enums;
+using MapCrafterGUI.Extensions;
 using MapCrafterGUI.Helpers;
 using MapCrafterGUI.LanguageHandler;
 using MapCrafterGUI.MapCrafterConfiguration;

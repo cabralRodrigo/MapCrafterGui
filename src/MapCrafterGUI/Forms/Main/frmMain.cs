@@ -1,4 +1,5 @@
 ﻿using MapCrafterGUI.Dialogs;
+using MapCrafterGUI.Extensions;
 using MapCrafterGUI.Forms.Main;
 using MapCrafterGUI.Helpers;
 using MapCrafterGUI.LanguageHandler;
@@ -55,7 +56,8 @@ namespace MapCrafterGUI.Forms
         {
             var ser = JsonConvert.SerializeObject(this.config);
             this.RefreshForm();
-            config.GenerateConfigurationFile();
+            Clipboard.SetText(MapCrafterConfigurationGenerator.GenerateConfigurationFile(config));
+            MessageBox.Show("Config copied!!!");
         }
 
         private void btnRenderCondigurationOutput_Click(object sender, EventArgs e)

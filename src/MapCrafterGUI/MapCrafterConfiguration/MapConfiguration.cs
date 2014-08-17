@@ -39,17 +39,6 @@ namespace MapCrafterGUI.MapCrafterConfiguration
             if (this.Rotations.Contains(rotation))
                 this.Rotations.Remove(rotation);
         }
-        public string ToString(WorldConfiguration world)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine(string.Format("[map:{0}]", this.MapID.ToString()));
-            sb.AppendLine("name = " + this.Name);
-            sb.AppendLine("world = " + world.Name);
-            sb.AppendLine("rendermode = " + this.RenderMode.ToString().ToLower());
-            sb.AppendLine("rotations =" + this.GetRotationsToString());
-
-            return sb.ToString();
-        }
 
         private string GetRotationsToString()
         {

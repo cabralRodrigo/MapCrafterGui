@@ -1,4 +1,5 @@
 ﻿using MapCrafterGUI.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
@@ -44,19 +45,6 @@ namespace MapCrafterGUI.MapCrafterConfiguration
         public static void SetConfiguration(RenderConfiguration config)
         {
             _instance = config;
-        }
-        public string GenerateConfigurationFile()
-        {
-            StringBuilder sb = new StringBuilder();
-
-            sb.AppendLine("output_dir = " + this.OutputFolder);
-            sb.AppendLine("background_color = " + UtilHelper.GetHexCodeFromColor(this.BackgroudColor));
-            sb.AppendLine("");
-
-            foreach (WorldConfiguration world in this.Worlds)
-                sb.AppendLine(world.ToString());
-
-            return sb.ToString();
         }
     }
 }

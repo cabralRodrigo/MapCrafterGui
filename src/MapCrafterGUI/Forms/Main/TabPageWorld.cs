@@ -1,4 +1,5 @@
 ﻿using MapCrafterGUI.Dialogs;
+using MapCrafterGUI.Extensions;
 using MapCrafterGUI.LanguageHandler;
 using MapCrafterGUI.MapCrafterConfiguration;
 using System;

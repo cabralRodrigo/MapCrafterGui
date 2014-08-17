@@ -1,6 +1,7 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using MapCrafterGUI.Extensions;
 using MapCrafterGUI.LanguageHandler;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Windows.Forms;
 
 namespace MapCrafterGUI.Test.LanguageHandler
@@ -177,7 +178,7 @@ namespace MapCrafterGUI.Test.LanguageHandler
         [TestMethod]
         public void SetLocalizedField_ControlNull()
         {
-            Language.SetLocalizedField(null, LanguageControlField.Text);
+            LanguageExtensions.SetLocalizedField(null, LanguageControlField.Text);
         }
     }
 }

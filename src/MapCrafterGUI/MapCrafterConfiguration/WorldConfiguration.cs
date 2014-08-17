@@ -43,19 +43,6 @@ namespace MapCrafterGUI.MapCrafterConfiguration
         {
             return Validate_FolderWorld(this.InputFolder) && Validate_LevelFile(this.InputFolder);
         }
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine(string.Format("[world:{0}]", this.Name));
-            sb.AppendLine("input_dir = " + this.InputFolder);
-            sb.AppendLine("dimension = " + this.Dimension.ToString().ToLower());
-            sb.AppendLine("");
-
-            foreach (MapConfiguration map in this.Maps)
-                sb.AppendLine(map.ToString(this));
-
-            return sb.ToString();
-        }
         
         [OnDeserialized]
         internal void OnDeserialized(StreamingContext context)
