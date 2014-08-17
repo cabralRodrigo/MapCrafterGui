@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using MapCrafterGUI.MapCrafterGUIConfiguration;
+using System.IO;
 using System.Reflection;
 
 namespace MapCrafterGUI.Helpers
@@ -38,6 +39,14 @@ namespace MapCrafterGUI.Helpers
         public static string GetFileExtension(string path)
         {
             return new FileInfo(path).Extension;
+        }
+
+        public static string GetFolderNameFromFile(string file)
+        {
+            if (File.Exists(file))
+                return new FileInfo(file).DirectoryName;
+            else
+                return null;
         }
 
         public static string ReadFile(string path)

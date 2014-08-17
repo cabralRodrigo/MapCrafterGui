@@ -7,17 +7,16 @@ using System.Runtime.Serialization;
 
 namespace MapCrafterGUI.MapCrafterGUIConfiguration
 {
-    public class Configuration
+    public class Configuration : SynchronizableClass<Configuration>
     {
         #region Static Members
 
         private static Configuration _instance;
-        public Configuration()
-        {
-            this.savePropertiesOnChanged = false;
-        }
+        public static Configuration instance { get { return _instance; } }
 
-        public static string ConfigurationFilePath
+        public Configuration() : base(Configuration.ConfigurationFilePath) { }
+
+        private static string ConfigurationFilePath
         {
             get
             {
@@ -25,90 +24,42 @@ namespace MapCrafterGUI.MapCrafterGUIConfiguration
             }
         }
 
-        public static Configuration instance { get { return _instance; } }
-        public static Configuration GetDefaultConfiguration()
+        public static Configuration GetDefaultConfig()
         {
-            Configuration defaultConfig = new Configuration();
-            return defaultConfig;
-        }
+            Configuration config = new Configuration();
+            config.DisableSynchronization();
+            config.LastSelectedPath = string.Empty;
+            config.EnableSynchonization();
 
-        public static void InitConfiguration()
-        {
-            Configuration.SetInstance(Configuration.LoadConfigurationFromFile());
-        }
-        private static void CreateConfigurationFile()
-        {
-            if (!File.Exists(ConfigurationFilePath))
-            {
-                string stringDefaultConfig = JsonConvert.SerializeObject(Configuration.GetDefaultConfiguration());
-                IOHelper.CreateTextFile(ConfigurationFilePath, stringDefaultConfig, false);
-            }
-        }
-        private static Configuration LoadConfigurationFromFile()
-        {
-            Configuration.CreateConfigurationFile();
-
-            Configuration configLoaded;
-            bool configLoadedSuccess = UtilHelper.LoadFileTypeFromFile<Configuration>(ConfigurationFilePath, out configLoaded);
-
-            if (configLoaded == null || !configLoadedSuccess)
-                configLoaded = Configuration.GetDefaultConfiguration();
-
-            return configLoaded;
-        }
-        private static void SetInstance(Configuration config)
-        {
-            config.savePropertiesOnChanged = true;
-            _instance = config;
+            return config;
         }
 
         #endregion
 
-        [JsonIgnore]
-        private bool savePropertiesOnChanged;
-
-        public void SaveConfiguration()
+        #region Synchronizable
+        protected override Configuration GetDefault()
         {
-            Configuration configSaved = LoadConfigurationFromFile();
-
-            string stringConfigToSave = JsonConvert.SerializeObject(this);
-            string stringConfigSaved = JsonConvert.SerializeObject(configSaved);
-
-            try
-            {
-                File.Delete(ConfigurationFilePath);
-                IOHelper.CreateTextFile(ConfigurationFilePath, stringConfigToSave, false);
-            }
-            catch (Exception ex)
-            {
-                TraceHelper.Error("Error saving the configuration file in the directory " + ConfigurationFilePath, ex);
-                IOHelper.CreateTextFile(ConfigurationFilePath, stringConfigSaved, true);
-            }
+            return Configuration.GetDefaultConfig();
         }
 
-        [OnDeserialized]
-        internal void OnDeserialized(StreamingContext context)
+        private string lastSelectedPath;
+        public string LastSelectedPath
         {
-            this.savePropertiesOnChanged = true;
+            get { return lastSelectedPath; }
+            set { base.SynchronizePropertySet<string>(ref lastSelectedPath, value); }
         }
+        #endregion
 
-        [OnDeserializing]
-        internal void OnDeserializing(StreamingContext context)
-        {
-            this.savePropertiesOnChanged = false;
-        }
 
-        private void SetPropertyAndSaveConfigFile<T>(ref T property, T value, [CallerMemberName] string propertyName = null)
+        public static void LoadSavedConfig()
         {
-            bool isEqual = UtilHelper.CompareObjects(property, value);
-            property = value;
-            
-            if (this.savePropertiesOnChanged && !isEqual)
-            {
-                TraceHelper.Info(string.Format("Automatically saving the \"{0}\" property, with the value \"{1}\"", propertyName, value));
-                this.SaveConfiguration();
-            }
-            
+            Configuration config = null;
+            bool success = UtilHelper.LoadFileTypeFromFile<Configuration>(Configuration.ConfigurationFilePath, out config);
+
+            if (!success || config == null)
+                config = Configuration.GetDefaultConfig();
+
+            Configuration._instance = config;            
         }
     }
 }

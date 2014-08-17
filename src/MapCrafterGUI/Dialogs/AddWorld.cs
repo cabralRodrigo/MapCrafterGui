@@ -52,8 +52,7 @@ namespace MapCrafterGUI.Dialogs
 
         private void btnInputFolder_Click(object sender, EventArgs e)
         {
-            folderDialog.SelectedPath = string.IsNullOrEmpty(txtInputFolder.Text.Trim()) ? Environment.CurrentDirectory : txtInputFolder.Text.Trim();
-            if (folderDialog.ShowDialog() == DialogResult.OK)
+            if (folderDialog.OpenDialogFromPath(txtInputFolder.Text) == DialogResult.OK)
             {
                 this.txtInputFolder.Text = folderDialog.SelectedPath;
                 this.txtInputValidate();

@@ -184,21 +184,21 @@
             // menuItemNewConfig
             // 
             this.menuItemNewConfig.Name = "menuItemNewConfig";
-            this.menuItemNewConfig.Size = new System.Drawing.Size(214, 22);
+            this.menuItemNewConfig.Size = new System.Drawing.Size(216, 22);
             this.menuItemNewConfig.Text = "menuItemNewConfig.Text";
             this.menuItemNewConfig.Click += new System.EventHandler(this.menuItemNewConfig_Click);
             // 
             // menuItemLoadConfig
             // 
             this.menuItemLoadConfig.Name = "menuItemLoadConfig";
-            this.menuItemLoadConfig.Size = new System.Drawing.Size(214, 22);
-            this.menuItemLoadConfig.Text = "loadItemLoadConfig.Text";
+            this.menuItemLoadConfig.Size = new System.Drawing.Size(216, 22);
+            this.menuItemLoadConfig.Text = "menuItemLoadConfig.Text";
             this.menuItemLoadConfig.Click += new System.EventHandler(this.menuItemLoadConfig_Click);
             // 
             // menuItemSaveConfig
             // 
             this.menuItemSaveConfig.Name = "menuItemSaveConfig";
-            this.menuItemSaveConfig.Size = new System.Drawing.Size(214, 22);
+            this.menuItemSaveConfig.Size = new System.Drawing.Size(216, 22);
             this.menuItemSaveConfig.Text = "menuItemSaveConfig.Text";
             this.menuItemSaveConfig.Click += new System.EventHandler(this.menuItemSaveConfig_Click);
             // 

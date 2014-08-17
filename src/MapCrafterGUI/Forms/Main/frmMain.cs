@@ -4,6 +4,7 @@ using MapCrafterGUI.Forms.Main;
 using MapCrafterGUI.Helpers;
 using MapCrafterGUI.LanguageHandler;
 using MapCrafterGUI.MapCrafterConfiguration;
+using MapCrafterGUI.MapCrafterGUIConfiguration;
 using Newtonsoft.Json;
 using System;
 using System.Linq;
@@ -41,6 +42,8 @@ namespace MapCrafterGUI.Forms
             this.dialogOpenProject.Title = Language.GetLocalizedStringRaw("frmMain.dialogOpenProject.Title");
             this.dialogSaveProject.Title = Language.GetLocalizedStringRaw("frmMain.dialogSaveProject.Title");
             this.dialogRenderConfigurationOutput.Description = Language.GetLocalizedStringRaw("frmMain.dialogRenderConfigurationOutput.Description");
+
+            this.txtRenderConfigurationOutputPath.Text = Configuration.instance.LastSelectedPath;
         }
 
         private RenderConfiguration config { get { return RenderConfiguration.instance; } }
@@ -62,8 +65,7 @@ namespace MapCrafterGUI.Forms
 
         private void btnRenderCondigurationOutput_Click(object sender, EventArgs e)
         {
-            dialogRenderConfigurationOutput.SelectedPath = Environment.CurrentDirectory;
-            if (dialogRenderConfigurationOutput.ShowDialog() == DialogResult.OK)
+            if (dialogRenderConfigurationOutput.OpenDialogFromPath(this.txtRenderConfigurationOutputPath.Text) == DialogResult.OK)
             {
                 this.config.OutputFolder = dialogRenderConfigurationOutput.SelectedPath;
                 this.RefreshForm();
@@ -76,8 +78,7 @@ namespace MapCrafterGUI.Forms
 
         private void menuItemLoadConfig_Click(object sender, EventArgs e)
         {
-            dialogOpenProject.InitialDirectory = Environment.CurrentDirectory;
-            if (dialogOpenProject.ShowDialog() == DialogResult.OK)
+            if (dialogOpenProject.OpenDialogFromPath(Configuration.instance.LastSelectedPath) == DialogResult.OK)
             {
                 string errorOnOpening = Language.GetLocalizedGenericFieldForControl(this, LanguageGenericField.Error, "ErrorOnOpeningFile", new { LineBreak = Environment.NewLine });
                 string errorOnOpeningCaption = Language.GetLocalizedGenericFieldForControl(this, LanguageGenericField.Error, "ErrorOnOpeningFileCaption");
@@ -107,10 +108,8 @@ namespace MapCrafterGUI.Forms
 
         private void menuItemSaveConfig_Click(object sender, EventArgs e)
         {
-            dialogSaveProject.InitialDirectory = Environment.CurrentDirectory;
-            if (dialogSaveProject.ShowDialog() == DialogResult.OK)
+            if (dialogSaveProject.OpenDialogFromPath(Configuration.instance.LastSelectedPath) == DialogResult.OK)
                 IOHelper.CreateTextFile(dialogSaveProject.FileName, JsonConvert.SerializeObject(this.config), true);
-
         }
 
         private void pnBackgroundColor_Click(object sender, EventArgs e)

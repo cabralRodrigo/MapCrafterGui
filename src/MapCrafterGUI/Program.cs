@@ -27,7 +27,7 @@ namespace MapCrafterGUI
             LanguageFile.LoadLanguageFile(CultureInfo.CurrentUICulture, new CultureInfo("en-US"));
 
             //Init of the configuration system
-            Configuration.InitConfiguration();
+            Configuration.LoadSavedConfig();
         }
     }
 }

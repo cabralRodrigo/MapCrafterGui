@@ -51,6 +51,7 @@
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Extensions\LanguageExtensions.cs" />
     <Compile Include="Helpers\Logger.cs" />
+    <Compile Include="Helpers\SincronizabledClass.cs" />
     <Compile Include="MapCrafterConfiguration\MapCrafterConfigurationGenerator.cs" />
     <Compile Include="MapCrafterGUIConfiguration\Configuration.cs" />
     <Compile Include="Dialogs\AddMap.cs">
