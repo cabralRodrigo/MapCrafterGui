@@ -1,7 +1,6 @@
 {
     "Fields": 
     {
-
         "WorldConfiguration.Error.WorldFolderInvalid": "Pasta não existente",
         "WorldConfiguration.Error.LevelFileInvalid": "A pasta selecionada não contém o arquivo 'level.dat'.",
         "WorldConfiguration.Error.WorldNameInvalid": "Nome inválido para o mundo",
@@ -19,7 +18,7 @@
         "RenderMode.DayLight": "Dia",
         "RenderMode.NightLight": "Noite",
         "RenderMode.Cave": "Caverna",
-      
+    
         "frmAddWorld.Text": "Adicionar Mundo",
         "frmAddWorld.lblDimension.Text": "Dimensão",
         "frmAddWorld.lblInputFolder.Text": "Diretório",
@@ -33,7 +32,23 @@
         "frmMain.Error.ErrorOnOpeningFileCaption": "Erro ao abrir o projeto",
         "frmMain.Info.WorldInfoInvalid": "Um ou mais mundos do projeto carregado são inválidos.{LineBreak}Veja mais detalhes nas informações do mundo.",
         "frmMain.Info.WorldInfoInvalidCaption": "Erro ao abrir o projeto",
-        
+		"frmMain.groupRenderConfig.Text": "Configurações do MapCrafter",
+		"frmMain.btnAddWorld.Text":"Adicionar Mundo",
+        "frmMain.Text": "MapCrafterGUI - Versão {Version}",
+		"frmMain.dialogSaveOpen.Filter": "Projeto do MapCrafterGui",
+		"frmMain.menuItemLoadConfig.Text": "Abrir projeto",
+		"frmMain.menuItemSaveConfig.Text": "Salvar projeto",
+		"frmMain.menuItemNewConfig.Text": "Novo projeto",
+		"frmMain.menuItemFile.Text": "Arquivo",
+		"frmMain.dialogOpenProject.Title": "Abrir projeto",
+		"frmMain.dialogSaveProject.Title": "Salvar projeto",
+		"frmMain.dialogRenderConfigurationOutput.Description": "Selecione a pasta que o MapCrafter irá criar o mapa do projeto",
+		
+		"groupRenderConfig.lblRenderConfigurationOutputPath.Text": "Pasta de saida do MapCrafter",
+		"groupRenderConfig.lblRenderConfigurationFileName.Text": "Nome do arquivo de configuração",
+		"groupRenderConfig.lblRenderConfigurationColor.Text": "Cor de fundo do mapa (clique para editar)",
+		"groupRenderConfig.btnRenderCondigurationOutput.Text": "Procurar",	
+	
         "frmAddMap.Text": "Adicionar Mapa",
         "frmAddMap.lblWorldName.Text": "Mundo Selecionado",
         "frmAddMap.lblMapName.Text": "Nome do Mapa",

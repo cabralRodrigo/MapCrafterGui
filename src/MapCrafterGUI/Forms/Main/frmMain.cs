@@ -15,22 +15,47 @@ namespace MapCrafterGUI.Forms
         public frmMain()
         {
             InitializeComponent();
+
             this.RefreshForm();
 
-            dialogSaveProject.DefaultExt = Info.PROJECT_FILE_EXTENSION;
-            dialogSaveProject.Filter = string.Format("MapCrafterGui Project|*.{0}", Info.PROJECT_FILE_EXTENSION);
+            string dialogsFilterDescription = Language.GetLocalizedStringRaw("frmMain.dialogSaveOpen.Filter");
+            this.dialogSaveProject.DefaultExt = Info.PROJECT_FILE_EXTENSION;
+            this.dialogSaveProject.Filter = string.Format("{0}|*.{1}", dialogsFilterDescription, Info.PROJECT_FILE_EXTENSION);
 
-            dialogOpenProject.DefaultExt = Info.PROJECT_FILE_EXTENSION;
-            dialogOpenProject.Filter = string.Format("MapCrafterGui Project|*.{0}", Info.PROJECT_FILE_EXTENSION);
+            this.dialogOpenProject.DefaultExt = Info.PROJECT_FILE_EXTENSION;
+            this.dialogOpenProject.Filter = string.Format("{0}|*.{1}", dialogsFilterDescription, Info.PROJECT_FILE_EXTENSION);
+
+            this.lblRenderConfigurationOutputPath.SetLocalizedField(LanguageControlField.Text);
+            this.lblRenderConfigurationFileName.SetLocalizedField(LanguageControlField.Text);
+            this.lblRenderConfigurationColor.SetLocalizedField(LanguageControlField.Text);
+            this.groupRenderConfig.SetLocalizedField(LanguageControlField.Text);
+            this.btnRenderCondigurationOutput.SetLocalizedField(LanguageControlField.Text);
+            this.btnAddWorld.SetLocalizedField(LanguageControlField.Text);
+            this.SetLocalizedField(LanguageControlField.Text, new { Version = Info.Version });
+
+            this.menuItemLoadConfig.Text = Language.GetLocalizedStringRaw("frmMain.menuItemLoadConfig.Text");
+            this.menuItemSaveConfig.Text = Language.GetLocalizedStringRaw("frmMain.menuItemSaveConfig.Text");
+            this.menuItemNewConfig.Text = Language.GetLocalizedStringRaw("frmMain.menuItemNewConfig.Text");
+            this.menuItemFile.Text = Language.GetLocalizedStringRaw("frmMain.menuItemFile.Text");
+            this.dialogOpenProject.Title = Language.GetLocalizedStringRaw("frmMain.dialogOpenProject.Title");
+            this.dialogSaveProject.Title = Language.GetLocalizedStringRaw("frmMain.dialogSaveProject.Title");
+            this.dialogRenderConfigurationOutput.Description = Language.GetLocalizedStringRaw("frmMain.dialogRenderConfigurationOutput.Description");
         }
 
         private RenderConfiguration config { get { return RenderConfiguration.instance; } }
-       
+
         private void btnAddWorld_Click(object sender, EventArgs e)
         {
             using (frmAddWorld addWorldDialog = new frmAddWorld(config))
                 if (addWorldDialog.ShowDialog() == DialogResult.OK)
                     RefreshForm();
+        }
+
+        private void btnDebug_Click(object sender, EventArgs e)
+        {
+            var ser = JsonConvert.SerializeObject(this.config);
+            this.RefreshForm();
+            config.GenerateConfigurationFile();
         }
 
         private void btnRenderCondigurationOutput_Click(object sender, EventArgs e)
@@ -43,26 +68,11 @@ namespace MapCrafterGUI.Forms
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            var ser = JsonConvert.SerializeObject(this.config);
-            this.RefreshForm();
-            config.GenerateConfigurationFile();
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
+        private void frmMain_Load(object sender, EventArgs e)
         {
         }
-    
-        private void listView1_ItemActivate(object sender, EventArgs e)
-        {
-            var item = ((ListView)sender).FocusedItem;
 
-            var item2 = item as ListViewItemMap;
-
-        }
-
-        private void loadConToolStripMenuItem_Click(object sender, EventArgs e)
+        private void menuItemLoadConfig_Click(object sender, EventArgs e)
         {
             dialogOpenProject.InitialDirectory = Environment.CurrentDirectory;
             if (dialogOpenProject.ShowDialog() == DialogResult.OK)
@@ -87,10 +97,18 @@ namespace MapCrafterGUI.Forms
             }
         }
 
-        private void newProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        private void menuItemNewConfig_Click(object sender, EventArgs e)
         {
             RenderConfiguration.SetConfiguration(new RenderConfiguration(Info.RENDER_CONFIGURATION_FILE_NAME, Info.RENDER_CONFIGURATION_OUTPUT_FOLDER));
             this.RefreshForm();
+        }
+
+        private void menuItemSaveConfig_Click(object sender, EventArgs e)
+        {
+            dialogSaveProject.InitialDirectory = Environment.CurrentDirectory;
+            if (dialogSaveProject.ShowDialog() == DialogResult.OK)
+                IOHelper.CreateTextFile(dialogSaveProject.FileName, JsonConvert.SerializeObject(this.config), true);
+
         }
 
         private void pnBackgroundColor_Click(object sender, EventArgs e)
@@ -105,21 +123,14 @@ namespace MapCrafterGUI.Forms
 
         private void RefreshForm()
         {
-            this.lblRenderConfigurarionName.Text = config.FileName;
-            this.lblRenderConfigurationOutput.Text = config.OutputFolder;
+            this.txtRenderConfigurationFileName.Text = config.FileName;
+            this.txtRenderConfigurationOutputPath.Text = config.OutputFolder;
+
             this.pnBackgroundColor.BackColor = config.BackgroudColor;
             tabsWorlds.Controls.Clear();
 
             foreach (WorldConfiguration world in config.Worlds)
                 tabsWorlds.Controls.Add(new TabPageWorld(world));
-        }
-       
-        private void saveConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            dialogSaveProject.InitialDirectory = Environment.CurrentDirectory;
-            if (dialogSaveProject.ShowDialog() == DialogResult.OK)
-                IOHelper.CreateTextFile(dialogSaveProject.FileName, JsonConvert.SerializeObject(this.config), true);
-
         }
     }
 }
