@@ -1,9 +1,7 @@
 ﻿using MapCrafterGUI.Enums;
-using MapCrafterGUI.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace MapCrafterGUI.MapCrafterConfiguration
 {
@@ -38,19 +36,6 @@ namespace MapCrafterGUI.MapCrafterConfiguration
         {
             if (this.Rotations.Contains(rotation))
                 this.Rotations.Remove(rotation);
-        }
-
-        private string GetRotationsToString()
-        {
-            StringBuilder sb = new StringBuilder();
-
-            if (this.GetRotations().Length == 0)
-                sb.Append(" " + UtilHelper.GetEnumValue(MapConfiguration.DefaultRotation));
-            else
-                foreach (var rotation in this.GetRotations())
-                    sb.Append(" " + UtilHelper.GetEnumValue(rotation));
-
-            return sb.ToString();
         }
     }
 }
