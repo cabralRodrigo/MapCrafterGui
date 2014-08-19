@@ -20,7 +20,7 @@ namespace MapCrafterGUI.MapCrafterGUIConfiguration
         {
             get
             {
-                return Path.Combine(IOHelper.FolderOfApplication, Info.APPLICATION_CONFIGURATION_FILE);
+                return Path.Combine(IOHelper.ApplicationPath, Info.APPLICATION_CONFIGURATION_FILE);
             }
         }
 

@@ -42,7 +42,7 @@ namespace MapCrafterGUI.LanguageHandler
         /// <returns>Path to the language file</returns>
         private static string GetLocationOfLanguageFile(CultureInfo culture)
         {
-            return Path.Combine(IOHelper.FolderOfApplication, "lang", string.Format("{0}.{1}", culture.Name, Info.LANGUAGE_FILE_EXTENSION));
+            return Path.Combine(IOHelper.ApplicationPath, "lang", string.Format("{0}.{1}", culture.Name, Info.LANGUAGE_FILE_EXTENSION));
         }
 
         #endregion

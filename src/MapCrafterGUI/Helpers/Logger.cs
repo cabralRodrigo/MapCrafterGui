@@ -9,7 +9,7 @@ namespace MapCrafterGUI.Helpers
         {
             get
             {
-                return Path.Combine(IOHelper.FolderOfApplication, "log");
+                return Path.Combine(IOHelper.ApplicationPath, "log");
             }
         }
        
