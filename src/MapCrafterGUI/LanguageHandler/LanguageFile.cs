@@ -28,8 +28,8 @@ namespace MapCrafterGUI.LanguageHandler
             LanguageFile newLang;
 
             //Loads the language file from the CultureInfo received from parameter, if the load fails, loads the language file from the default CultureInfo
-            if (!UtilHelper.LoadFileTypeFromFile(GetLocationOfLanguageFile(culture), out newLang))
-                if (!UtilHelper.LoadFileTypeFromFile(GetLocationOfLanguageFile(defaultCulture), out newLang))
+            if (!IOHelper.LoadObjectFromJsonFile(GetLocationOfLanguageFile(culture), out newLang))
+                if (!IOHelper.LoadObjectFromJsonFile(GetLocationOfLanguageFile(defaultCulture), out newLang))
                     newLang = new LanguageFile();
 
             instance = newLang;

@@ -36,7 +36,7 @@ namespace MapCrafterGUI.MapCrafterConfiguration
         public static bool LoadFromFile(string path)
         {
             RenderConfiguration newConfig;
-            bool success = UtilHelper.LoadFileTypeFromFile(path, out newConfig);
+            bool success = IOHelper.LoadObjectFromJsonFile(path, out newConfig);
             if (success)
                 SetConfiguration(newConfig);
 

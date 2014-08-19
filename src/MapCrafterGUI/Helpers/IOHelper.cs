@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using Newtonsoft.Json;
+using System;
+using System.IO;
 using System.Reflection;
 
 namespace MapCrafterGUI.Helpers
@@ -73,6 +75,37 @@ namespace MapCrafterGUI.Helpers
                 else
                     return null;
             }
+        }
+
+        /// <summary>
+        /// Loads an instace of object from a json file
+        /// </summary>
+        /// <typeparam name="T">the type of object which will be loaded</typeparam>
+        /// <param name="path">Path to the json file</param>
+        /// <param name="objectLoaded">Object loaded from json file</param>
+        /// <returns>Boolean indicanting if the object was loaded from json file successfully</returns>
+        public static bool LoadObjectFromJsonFile<T>(string path, out T objectLoaded)
+        {
+            objectLoaded = default(T);
+            bool successOnLoad = false;
+            try
+            {
+                //Read the file
+                string textFile = IOHelper.ReadFile(path);
+                if (string.IsNullOrEmpty(textFile))
+                    return false;
+
+                //Deserialize the json string readed into an object
+                objectLoaded = JsonConvert.DeserializeObject<T>(textFile);
+                successOnLoad = objectLoaded != null;
+            }
+            catch (Exception ex)
+            {
+                //Log if any error
+                TraceHelper.Error("Error while loading an object from a file. Path:" + path, ex);
+            }
+
+            return successOnLoad;
         }
 
         /// <summary>

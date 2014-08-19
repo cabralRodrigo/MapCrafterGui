@@ -57,7 +57,7 @@ namespace MapCrafterGUI.Helpers
         {
             T objToLoad = default(T);
 
-            bool success = UtilHelper.LoadFileTypeFromFile<T>(this.SynchronizationFile, out objToLoad);
+            bool success = IOHelper.LoadObjectFromJsonFile<T>(this.SynchronizationFile, out objToLoad);
 
             if (!success || objToLoad == null)
                 objToLoad = this.GetDefault();

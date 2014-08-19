@@ -1,9 +1,4 @@
-﻿using MapCrafterGUI.LanguageHandler;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Linq;
 using System.Reflection;
 
@@ -11,50 +6,32 @@ namespace MapCrafterGUI.Helpers
 {
     public static class UtilHelper
     {
-        public static bool CompareObjects<T>(T obj1, T obj2)
-        {
-            bool equals = false;
-
-            if (obj1 == null && obj2 == null)
-                equals = true;
-
-            if ((obj1 == null && obj2 != null) || (obj1 != null && obj2 != null))
-                equals = obj2.Equals(obj1);
-
-            if (obj2 == null && obj1 != null)
-                equals = obj1.Equals(obj2);
-
-            return equals;
-        }
-    
+        /// <summary>
+        /// Get a color object from the html code of this same color
+        /// </summary>
+        /// <param name="htmlColor">Html code of the color</param>
+        /// <returns>The color of the html color code</returns>
         public static Color GetColorFromHtmlColor(string htmlColor)
         {
             return ColorTranslator.FromHtml(htmlColor);
         }
 
+        /// <summary>
+        /// Get the hexadecimal code from a color
+        /// </summary>
+        /// <param name="color">The color to get the hexdecimal code</param>
+        /// <returns>The hexadicimal code from the color received</returns>
         public static string GetHexCodeFromColor(Color color)
         {
             return string.Format("#{0}{1}{2}", color.R.ToString("X2"), color.G.ToString("X2"), color.B.ToString("X2"));
         }
-       
-        public static bool LoadFileTypeFromFile<T>(string path, out T objectLoaded)
-        {
-            objectLoaded = default(T);
-            bool successOnLoad = false;
-            try
-            {
-                string textFile = IOHelper.ReadFile(path);
-                objectLoaded = JsonConvert.DeserializeObject<T>(textFile);
-                successOnLoad = objectLoaded != null;
-            }
-            catch (Exception ex)
-            {
-                TraceHelper.Error("Error while loading an object from a file. Path:" + path, ex);
-            }
 
-            return successOnLoad;
-        }
-
+        /// <summary>
+        /// Replace metadata inside a string in the format: "{tags_name}"
+        /// </summary>
+        /// <param name="text">Text which to be made the replace</param>
+        /// <param name="metadata">The object which is the metadata to be replaced in the text</param>
+        /// <returns>The Text parameter replaced with the metadata object</returns>
         public static string StringReplaceWithMetadata(string text, object metadata)
         {
             string textWithMetadata = text;
@@ -67,6 +44,6 @@ namespace MapCrafterGUI.Helpers
                         textWithMetadata = textWithMetadata.Replace(string.Format("{{{0}}}", propName), propValue.ToString());
                 }
             return textWithMetadata;
-        }  
+        }
     }
 }

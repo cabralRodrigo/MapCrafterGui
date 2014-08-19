@@ -54,7 +54,7 @@ namespace MapCrafterGUI.MapCrafterGUIConfiguration
         public static void LoadSavedConfig()
         {
             Configuration config = null;
-            bool success = UtilHelper.LoadFileTypeFromFile<Configuration>(Configuration.ConfigurationFilePath, out config);
+            bool success = IOHelper.LoadObjectFromJsonFile<Configuration>(Configuration.ConfigurationFilePath, out config);
 
             if (!success || config == null)
                 config = Configuration.GetDefaultConfig();
