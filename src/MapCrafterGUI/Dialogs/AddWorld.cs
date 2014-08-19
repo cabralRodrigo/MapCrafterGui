@@ -19,7 +19,7 @@ namespace MapCrafterGUI.Dialogs
         {
             InitializeComponent();
             this.config = config;
-            this.cbDimension.DataSource = UtilHelper.ConvertEnumToDictionary<Dimension>(true).Select(s => s.Value).ToArray();
+            this.cbDimension.DataSource = EnumHelper.ConvertEnumToDictionary<Dimension>(true).Select(s => s.Value).ToArray();
 
             this.SetLocalizedField(LanguageControlField.Text);
             this.lblDimension.SetLocalizedField(LanguageControlField.Text);

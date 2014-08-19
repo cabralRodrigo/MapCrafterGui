@@ -46,7 +46,7 @@ namespace MapCrafterGUI.MapCrafterConfiguration
 
             StringBuilder sb = new StringBuilder();
             foreach (MapRotation rotation in rotationsDistinct)
-                sb.Append(" " + UtilHelper.GetEnumValue(rotation));
+                sb.Append(" " + EnumHelper.GetEnumValue(rotation));
 
             return sb.ToString();
         }

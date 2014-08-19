@@ -18,7 +18,7 @@ namespace MapCrafterGUI.Dialogs
             InitializeComponent();
             this.world = world;
             this.lblTextWorldName.Text = this.world.Name;
-            this.cbRenderMode.DataSource = UtilHelper.ConvertEnumToDictionary<RenderMode>(true).Select(s => s.Value).ToList();
+            this.cbRenderMode.DataSource = EnumHelper.ConvertEnumToDictionary<RenderMode>(true).Select(s => s.Value).ToList();
 
             this.PopulateRotations();
 
@@ -57,7 +57,7 @@ namespace MapCrafterGUI.Dialogs
        
         private void PopulateRotations()
         {
-            foreach (var rotation in UtilHelper.ConvertEnumToDictionary<MapRotation>(false))
+            foreach (var rotation in EnumHelper.ConvertEnumToDictionary<MapRotation>(false))
             {
                 Enum enumRotation = (Enum)Enum.Parse(typeof(MapRotation), rotation.Value);
                 string enumDescription = Language.GetLocalizedDescriptionForEnum(enumRotation);

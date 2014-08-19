@@ -26,48 +26,10 @@ namespace MapCrafterGUI.Helpers
 
             return equals;
         }
-
-        public static Dictionary<int, string> ConvertEnumToDictionary<T>(bool useLocalizedEnumDescription) where T : IComparable, IFormattable, IConvertible
-        {
-            Array arrayEnum = Enum.GetValues(typeof(T));
-            Dictionary<int, string> dicEnum = new Dictionary<int, string>();
-
-            for (int i = 0; i < arrayEnum.GetLength(0); i++)
-            {
-                string enumDescription;
-                if (useLocalizedEnumDescription)
-                    enumDescription = Language.GetLocalizedDescriptionForEnum((Enum)Enum.Parse(typeof(T), i.ToString()));
-                else
-                    enumDescription = arrayEnum.GetValue(i).ToString();
-                dicEnum.Add(i, enumDescription);
-            }
-
-            return dicEnum;
-        }
-
+    
         public static Color GetColorFromHtmlColor(string htmlColor)
         {
             return ColorTranslator.FromHtml(htmlColor);
-        }
-
-        public static string GetEnumDescription(Enum en)
-        {
-            string enumDescription = string.Empty;
-            DescriptionAttribute descAttribute = GetAttributesOfEnum<DescriptionAttribute>(en);
-            if (descAttribute != null)
-                enumDescription = descAttribute.Description;
-
-            return enumDescription;
-        }
-
-        public static string GetEnumValue(Enum en)
-        {
-            string enumValue = string.Empty;
-            DefaultValueAttribute valueAttribute = GetAttributesOfEnum<DefaultValueAttribute>(en);
-            if (valueAttribute != null)
-                enumValue = (valueAttribute.Value ?? string.Empty).ToString();
-
-            return enumValue;
         }
 
         public static string GetHexCodeFromColor(Color color)
@@ -105,11 +67,6 @@ namespace MapCrafterGUI.Helpers
                         textWithMetadata = textWithMetadata.Replace(string.Format("{{{0}}}", propName), propValue.ToString());
                 }
             return textWithMetadata;
-        }
-        
-        private static T GetAttributesOfEnum<T>(Enum en) where T : Attribute
-        {
-            return en.GetType().GetField(en.ToString()).GetCustomAttribute<T>();
-        }
+        }  
     }
 }

@@ -9,7 +9,7 @@ namespace MapCrafterGUI.LanguageHandler
         public static string GetLocalizedDescriptionForEnum(Enum en)
         {
             string nameOnFile = GetFieldNameOnLanguageFileForEnum(en);
-            string defaultValue = UtilHelper.GetEnumDescription(en);
+            string defaultValue = EnumHelper.GetEnumDescription(en);
 
             return GetLocalizedStringRaw(nameOnFile, defaultValue);
         }
