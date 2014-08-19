@@ -41,12 +41,24 @@ namespace MapCrafterGUI.Helpers
             return new FileInfo(path).Extension;
         }
 
-        public static string GetFolderNameFromFile(string file)
+        public static string GetFolderNameFromPath(string path)
         {
-            if (File.Exists(file))
-                return new FileInfo(file).DirectoryName;
+            FileAttributes fileAttr = File.GetAttributes(path);
+
+            if ((fileAttr & FileAttributes.Directory) == FileAttributes.Directory)
+            {
+                if (Directory.Exists(path))
+                    return path;
+                else
+                    return null;
+            }
             else
-                return null;
+            {
+                if (File.Exists(path))
+                    return new FileInfo(path).DirectoryName;
+                else
+                    return null;
+            }
         }
 
         public static string ReadFile(string path)
