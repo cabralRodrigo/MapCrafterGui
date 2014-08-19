@@ -60,7 +60,7 @@ namespace MapCrafterGUI.Test.LanguageHandler
         {
             string result = Language.GetLocalizedDescriptionForEnum(EnumTest.Item2);
 
-            Assert.AreEqual<string>(string.Empty, result);
+            Assert.AreEqual<string>(null, result);
         }
         [TestMethod]
         public void GetLocalizedDescriptionForEnumTest3()

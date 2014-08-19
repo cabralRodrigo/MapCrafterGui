@@ -51,6 +51,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="HelpersTests\EnumHelperTest.cs" />
     <Compile Include="HelpersTests\UtilGeralHelperTest.cs" />
     <Compile Include="LanguageHandler\LanguageTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
