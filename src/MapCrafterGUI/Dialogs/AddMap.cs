@@ -34,7 +34,7 @@ namespace MapCrafterGUI.Dialogs
         private void btnAdd_Click(object sender, EventArgs e)
         {
             //TODO: do a validation here
-            MapConfiguration map = new MapConfiguration(txtMapName.Text, world);
+            MapConfiguration map = new MapConfiguration(txtMapName.Text);
 
             RenderMode renderMode;
             if (Enum.TryParse<RenderMode>(this.cbRenderMode.SelectedIndex.ToString(), out renderMode))

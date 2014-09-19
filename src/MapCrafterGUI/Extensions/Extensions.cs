@@ -1,7 +1,9 @@
 ﻿using MapCrafterGUI.Helpers;
 using MapCrafterGUI.MapCrafterGUIConfiguration;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
@@ -18,6 +20,30 @@ namespace MapCrafterGUI.Extensions
         public static void AppendLineFormat(this StringBuilder source, string format, params object[] args)
         {
             source.AppendLine(string.Format(format, args));
+        }
+
+        public static IEnumerable<FieldInfo> GetFields<T>(this Type source)
+        {
+            return Extensions.GetFields<T>(source, false);
+        }
+
+        public static IEnumerable<FieldInfo> GetFields<T>(this Type source, bool inherit)
+        {
+            foreach (FieldInfo field in source.GetFields())
+                if (UtilHelper.IsClassesEqual(typeof(T), field.FieldType, inherit))
+                    yield return field;
+        }
+
+        public static IEnumerable<FieldInfo> GetFields<T>(this Type source, BindingFlags bidingAttrs)
+        {
+            return Extensions.GetFields<T>(source, bidingAttrs, false);
+        }
+      
+        public static IEnumerable<FieldInfo> GetFields<T>(this Type source, BindingFlags bidingAttrs, bool inherit)
+        {
+            foreach (FieldInfo field in source.GetFields(bidingAttrs))
+                if (UtilHelper.IsClassesEqual(typeof(T), field.FieldType, inherit))
+                    yield return field;
         }
 
         /// <summary>
@@ -61,7 +87,7 @@ namespace MapCrafterGUI.Extensions
             else if (Directory.Exists(Configuration.instance.LastSelectedPath))
                 setDialogPath(dialog, Configuration.instance.LastSelectedPath);
 
-            //if everything else fails, set the current directory of the applicatin
+            //if everything else fails, set the current directory of the application
             else
                 setDialogPath(dialog, Environment.CurrentDirectory);
 

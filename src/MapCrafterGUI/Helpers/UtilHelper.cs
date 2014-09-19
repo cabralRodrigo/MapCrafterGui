@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Linq;
 using System.Reflection;
 
@@ -6,6 +7,14 @@ namespace MapCrafterGUI.Helpers
 {
     public static class UtilHelper
     {
+        public static bool IsClassesEqual(Type type1, Type type2, bool inherit)
+        {
+            if (inherit)
+                return type1.IsAssignableFrom(type2);
+            else
+                return type1 == type2;
+        }
+
         /// <summary>
         /// Get a color object from the html code of this same color
         /// </summary>

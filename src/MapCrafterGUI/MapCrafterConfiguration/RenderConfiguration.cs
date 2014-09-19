@@ -1,11 +1,13 @@
-﻿using MapCrafterGUI.Helpers;
+﻿using MapCrafterGUI.ClassValidator;
+using MapCrafterGUI.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
+using System.IO;
 
 namespace MapCrafterGUI.MapCrafterConfiguration
 {
+    [Validatable(true)]
     public class RenderConfiguration
     {
         private static RenderConfiguration _instance;
@@ -46,5 +48,8 @@ namespace MapCrafterGUI.MapCrafterConfiguration
         {
             _instance = config;
         }
+
+        [ValidationDelegate("OutputFolderNotExists", "OutputFolder")]
+        public static Func<RenderConfiguration, bool> OutputFolderValidator = r => File.Exists(r.OutputFolder);
     }
 }

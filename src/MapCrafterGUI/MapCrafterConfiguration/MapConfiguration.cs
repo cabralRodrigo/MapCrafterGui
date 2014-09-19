@@ -1,15 +1,17 @@
-﻿using MapCrafterGUI.Enums;
+﻿using MapCrafterGUI.ClassValidator;
+using MapCrafterGUI.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace MapCrafterGUI.MapCrafterConfiguration
 {
+    [Validatable(true)]
     public class MapConfiguration
     {
         public static MapRotation DefaultRotation = MapRotation.TopLeft;
 
-        public MapConfiguration(string name, WorldConfiguration world)
+        public MapConfiguration(string name)
         {
             this.MapID = Guid.NewGuid();
             this.Name = name;
@@ -22,7 +24,7 @@ namespace MapCrafterGUI.MapCrafterConfiguration
         public string Name { get; set; }
         public RenderMode RenderMode { get; set; }
         private List<MapRotation> Rotations { get; set; }
-        
+
         public void AddRotation(MapRotation rotation)
         {
             if (!this.Rotations.Contains(rotation))
@@ -37,5 +39,11 @@ namespace MapCrafterGUI.MapCrafterConfiguration
             if (this.Rotations.Contains(rotation))
                 this.Rotations.Remove(rotation);
         }
+
+        [ValidationDelegate("InvalidMapID", "MapID")]
+        public static Func<MapConfiguration, bool> MapIDValidator = m => m.MapID != Guid.Empty;
+
+        [ValidationDelegate("InvalidMapMap", "Name")]
+        public static Func<MapConfiguration, bool> NameValidator = m => !string.IsNullOrEmpty(m.Name);
     }
 }

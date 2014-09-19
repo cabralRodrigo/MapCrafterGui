@@ -1,4 +1,5 @@
-﻿using MapCrafterGUI.Dialogs;
+﻿using MapCrafterGUI.ClassValidator;
+using MapCrafterGUI.Dialogs;
 using MapCrafterGUI.Extensions;
 using MapCrafterGUI.Forms.Main;
 using MapCrafterGUI.Helpers;
@@ -85,8 +86,10 @@ namespace MapCrafterGUI.Forms
 
                 if (RenderConfiguration.LoadFromFile(dialogOpenProject.FileName))
                 {
-
                     this.RefreshForm();
+
+                    //TODO: remake the valid of the loaded world in the main form
+                    /*
                     if (RenderConfiguration.instance.Worlds.Where(w => !w.IsWorldValid()).Count() > 0)
                     {
                         string worldsInvalid = Language.GetLocalizedGenericFieldForControl(this, LanguageGenericField.Info, "WorldInfoInvalid", new { LineBreak = Environment.NewLine });
@@ -94,6 +97,7 @@ namespace MapCrafterGUI.Forms
 
                         MessageBox.Show(worldsInvalid, worldsInvalidCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    */
                 }
                 else
                     MessageBox.Show(errorOnOpening, errorOnOpeningCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -69,6 +69,8 @@ namespace MapCrafterGUI.Dialogs
             string errorMessage = string.Empty;
             bool error = false;
 
+            //TODO: Remake this logic
+            /*
             if (!WorldConfiguration.Validate_FolderWorld(this.txtInputFolder.Text))
             {
                 error = true;
@@ -90,7 +92,7 @@ namespace MapCrafterGUI.Dialogs
                 this.txtInputFolder.BackColor = Color.White;
                 this.validationControl.SetError(this.txtInputFolder, string.Empty);
             }
-
+            */
             return !error;
         }
 
@@ -101,6 +103,8 @@ namespace MapCrafterGUI.Dialogs
 
         private bool txtWorldNameValidate()
         {
+            //TODO: remake this logic
+            /*
             bool error = !WorldConfiguration.Validate_WorldName(txtWorldName.Text);
             string errorMessage = WorldConfiguration.Validate_Error_WorldName;
 
@@ -116,6 +120,9 @@ namespace MapCrafterGUI.Dialogs
             }
 
             return !error;
+            */
+
+            return true;
         }
     }
 }

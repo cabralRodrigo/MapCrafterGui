@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MapCrafterGUI.Extensions;
+using MapCrafterGUI.LanguageHandler;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -7,51 +9,53 @@ namespace MapCrafterGUI.ClassValidator
 {
     public static class Validator
     {
-        public static IEnumerable<ValidationError> Validate<T>(T objectToValidate)
+        private class ValidationTuple<T>
         {
-            var validationErros = new List<ValidationError>();
+            public readonly ValidationDelegateAttribute ValidationAttribute;
+            public readonly Func<T, bool> ValidationDelegate;
 
-            var validationAttributes = Validator.GetValidationDelegates(objectToValidate);
-
-            var properties = typeof(T).GetProperties();
-
-            foreach (PropertyInfo property in properties)
+            public ValidationTuple(ValidationDelegateAttribute attr, Func<T, bool> validationDelegate)
             {
-                var validationTuple = validationAttributes.Where(tupleAttr => tupleAttr.Item1.Properties.Contains(property.Name)).ToList();
-
-                if (validationTuple.Count == 0)
-                    continue;
-
-                else if (validationTuple.Count > 1)
-                    throw new ValidationException("Error on validation, is not allowed multiples validators in the same property");
-
-                else
-                {
-                    Func<T, bool> validationDelegate = validationTuple[0].Item2.GetValue(objectToValidate) as Func<T, bool>;
-
-                    if (validationDelegate == null)
-                        throw new ValidationException(string.Format("Error on validation, validator delegate is null for the property '{0}'", property.Name));
-                    else
-                        if (!validationDelegate(objectToValidate))
-                            yield return new ValidationError(validationTuple[0].Item1.ErrorMessage, property.Name);
-
-                }
+                this.ValidationAttribute = attr;
+                this.ValidationDelegate = validationDelegate;
             }
         }
 
-        private static IEnumerable<Tuple<ValidationDelegateAttribute, FieldInfo>> GetValidationDelegates<T>(T objectToValidate)
+        public static IEnumerable<ValidationError> Validate<T>(T objectToValidate)
         {
-            var fields = typeof(T).GetFields();
-            var validationAttributes = new List<Tuple<ValidationDelegateAttribute, FieldInfo>>();
+            var d = Validator.GetAllValidationTuple<T>().ToList();
+            return null;
+        }
 
-            foreach (FieldInfo field in fields)
+        private static IEnumerable<ValidationTuple<T>> GetAllValidationTuple<T>()
+        {
+            var attributes = typeof(T).GetFields<Func<T, bool>>(BindingFlags.Static | BindingFlags.Public, true).ToList();
+
+            foreach (var attr in attributes)
             {
-                var rr = field.GetCustomAttribute<ValidationDelegateAttribute>();
-                if (rr != null)
-                    validationAttributes.Add(new Tuple<ValidationDelegateAttribute, FieldInfo>(rr, field));
-            }
+                Func<T, bool> validationDelegate = attr.GetValue(null) as Func<T, bool>;
+                ValidationDelegateAttribute validationAttribute = attr.GetCustomAttribute<ValidationDelegateAttribute>(true);
 
-            return validationAttributes;
+                if (validationDelegate == null)
+                    throw new ValidationException("");
+
+                if (validationAttribute != null)
+                    yield return new ValidationTuple<T>(validationAttribute, validationDelegate);
+            }
+        }
+
+        private static string GetErrorMessage(string className, ValidatableAttribute classAttribute, ValidationDelegateAttribute delegateAttribute)
+        {
+            string errorMessage = string.Empty;
+
+            bool useLocalizedErroMessage = delegateAttribute.UseLocalizedErrorMessage == null ? classAttribute.UseLocalizedErrorMessages : delegateAttribute.UseLocalizedErrorMessage.Value;
+
+            if (useLocalizedErroMessage)
+                errorMessage = Language.GetLocalizedStringRaw(string.Format("Validator.{0}.{1}", className, delegateAttribute.ErrorMessage));
+            else
+                errorMessage = delegateAttribute.ErrorMessage;
+
+            return errorMessage;
         }
     }
 }

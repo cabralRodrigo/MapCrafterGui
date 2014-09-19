@@ -47,7 +47,7 @@ namespace MapCrafterGUI.Forms.Main
         private void InitTagPageWorld()
         {
             //Set the informations about the world
-            this.lblTextWorldInput.Text = this.World.InputFolder;
+            this.lblTextWorldInput.Text = this.World.WorldPath;
             this.lblTextWorldName.Text = this.World.Name;
             this.Text = string.Format("{0} ({1})", this.World.Name, Language.GetLocalizedDescriptionForEnum(this.World.Dimension));
             this.lblTextDimension.Text = Language.GetLocalizedDescriptionForEnum(this.World.Dimension);

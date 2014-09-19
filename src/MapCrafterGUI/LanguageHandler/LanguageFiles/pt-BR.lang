@@ -5,6 +5,13 @@
         "WorldConfiguration.Error.LevelFileInvalid": "A pasta selecionada não contém o arquivo 'level.dat'.",
         "WorldConfiguration.Error.WorldNameInvalid": "Nome inválido para o mundo",
         
+		"Validator.WorldConfiguration.InvalidWorldPath": "Pasta não existente",
+		
+        "Validator.WorldConfiguration.LevelFileInvalid": "A pasta selecionada não contém o arquivo 'level.dat'.",
+		
+        "Validator.WorldConfiguration.InvalidWorldName": "Nome inválido para o mundo",
+        
+		
         "Dimension.Overworld": "Mundo Superior",
         "Dimension.Nether": "Inferno",
         "Dimension.End": "O Fim",
@@ -62,6 +69,8 @@
         "TabPageWorld.lblDimension.Text": "Dimensão",
         "TabPageWorld.lblWorldName.Text":  "Mundo",
         "TabPageWorld.headerRenderMode.Text":  "Modo de Renderização",
-        "TabPageWorld.headerName.Text":  "Nome"
+        "TabPageWorld.headerName.Text":  "Nome",
+		
+		"Validator.RenderConfiguration.OutputFolderNotExists": "Pasta para criação do mapa não existe"
     }
 }

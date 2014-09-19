@@ -19,7 +19,7 @@ namespace MapCrafterGUI.MapCrafterConfiguration
             foreach (WorldConfiguration world in renderConfig.Worlds)
             {
                 sb.AppendLineFormat("[world:{0}]", world.Name);
-                sb.AppendLineFormat("input_dir = {0}", world.InputFolder);
+                sb.AppendLineFormat("input_dir = {0}", world.WorldPath);
                 sb.AppendLineFormat("dimension = {0}", world.Dimension.ToString().ToLower());
                 sb.AppendLine(string.Empty);
 

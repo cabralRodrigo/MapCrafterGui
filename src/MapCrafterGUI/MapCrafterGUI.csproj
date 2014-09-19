@@ -42,10 +42,11 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClassValidator\ValidationDelagateAttribute.cs" />
+    <Compile Include="ClassValidator\ValidationAttributes.cs" />
     <Compile Include="ClassValidator\ValidationError.cs" />
     <Compile Include="ClassValidator\ValidationException.cs" />
     <Compile Include="ClassValidator\Validator.cs" />
+    <Compile Include="ClassValidator\Validators.cs" />
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Extensions\LanguageExtensions.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
