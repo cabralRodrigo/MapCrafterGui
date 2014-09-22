@@ -34,15 +34,27 @@ namespace MapCrafterGUI.ClassValidator
         /// <returns>List with all errors in the validation, the list will be empty if no error was found</returns>
         public static List<ValidationError> Validate<T>(T objectToValidate)
         {
+            return Validator.Validate(objectToValidate, string.Empty);
+        }
+
+        /// <summary>
+        /// Validates an instance of any class decorated with <seealso cref="MapCrafterGUI.ClassValidator.ValidationDelegateAttribute"/> attribute
+        /// </summary>
+        /// <typeparam name="T">The type of the class which will be validated</typeparam>
+        /// <param name="objectToValidate">The object which will be validated</param>
+        /// <param name="propertyName">The property name which will be validated</param>
+        /// <returns>List with all errors in the validation, the list will be empty if no error was found</returns>
+        public static List<ValidationError> Validate<T>(T objectToValidate, string propertyName)
+        {
             //Gets the validatable attribute of the class
             ValidatableAttribute validatableAttr = typeof(T).GetCustomAttribute<ValidatableAttribute>(true);
             if (validatableAttr == null)
                 throw new ValidationException("The class has to be decorated with the validatable attribute");
 
             //Gets all validation delegates and all validation attribute in the class
-            var tuples = Validator.GetAllValidationTuples<T>()
+            var tuples = Validator.GetAllValidationTuples<T>(propertyName)
                             .OrderBy(tuple => tuple.ValidationAttribute.Order)
-                            .ThenBy(tuple => tuple.ValidationAttribute.Property)
+                            .ThenBy(tuple => tuple.ValidationAttribute.PropertyName)
                             .ToList();
 
             //If the list is empty has no need to proceed
@@ -59,7 +71,7 @@ namespace MapCrafterGUI.ClassValidator
                     string errorMessage = Validator.GetErrorMessage(typeof(T).Name, validatableAttr, tuple.ValidationAttribute);
 
                     //Adds the error on the return list
-                    errorList.Add(new ValidationError(errorMessage, tuple.ValidationAttribute.Property));
+                    errorList.Add(new ValidationError(errorMessage, tuple.ValidationAttribute.PropertyName));
 
                     if (tuple.ValidationAttribute.StopValidationOnError)
                         break;
@@ -69,11 +81,24 @@ namespace MapCrafterGUI.ClassValidator
         }
 
         /// <summary>
+        /// Validates an instance of any class decorated with <seealso cref="MapCrafterGUI.ClassValidator.ValidationDelegateAttribute"/> attribute
+        /// </summary>
+        /// <typeparam name="T">The type of the class which will be validated</typeparam>
+        /// <param name="objectToValidate">The object which will be validated</param>
+        /// <param name="property">The property which will be validated</param>
+        /// <returns>List with all errors in the validation, the list will be empty if no error was found</returns>
+        public static List<ValidationError> Validate<T>(T objectToValidate, PropertyInfo property)
+        {
+            return Validator.Validate(objectToValidate, property.Name);
+        }
+
+        /// <summary>
         /// Gets all validation attributes and all validation delegates of a class
         /// </summary>
         /// <typeparam name="T">The type of the class to be validated</typeparam>
+        /// <param name="propertyName">Specifies the property for getting the validation attributes and the validation delegates. If null, will get all</param>
         /// <returns>IEnumerable with all the validation attributes and all validation delegates found in the class</returns>
-        private static IEnumerable<ValidationTuple<T>> GetAllValidationTuples<T>()
+        private static IEnumerable<ValidationTuple<T>> GetAllValidationTuples<T>(string propertyName)
         {
             //Gets all fields which are possible to be a validation delegate
             var fields = typeof(T).GetFields<Func<T, bool>>(BindingFlags.Static | BindingFlags.Public, true).ToList();
@@ -90,10 +115,11 @@ namespace MapCrafterGUI.ClassValidator
                 if (validationDelegate == null)
                     throw new ValidationException(string.Format("The validation delegate \"{0}\" cannot be null", attr.Name));
 
-                if (!Validator.PropertyExistsInClass<T>(validationAttribute.Property))
-                    throw new ValidationException(string.Format("Cannot found the property \"{0}\" in the class", validationAttribute.Property));
+                if (!Validator.PropertyExistsInClass<T>(validationAttribute.PropertyName))
+                    throw new ValidationException(string.Format("Cannot found the property \"{0}\" in the class", validationAttribute.PropertyName));
 
-                yield return new ValidationTuple<T>(validationAttribute, validationDelegate);
+                if (string.IsNullOrEmpty(propertyName) || propertyName == validationAttribute.PropertyName)
+                    yield return new ValidationTuple<T>(validationAttribute, validationDelegate);
             }
         }
 

@@ -9,9 +9,9 @@ namespace MapCrafterGUI.ClassValidator
     public class ValidationDelegateAttribute : Attribute
     {
         /// <summary>
-        /// The property that this attribute will validade
+        /// The property that this attribute will validate
         /// </summary>
-        public string Property { get; set; }
+        public string PropertyName { get; set; }
 
         /// <summary>
         /// The error message in case the validation fails
@@ -70,7 +70,7 @@ namespace MapCrafterGUI.ClassValidator
         public ValidationDelegateAttribute(string property, string errorMessage, bool stopValidationOnError, bool? useLocalizedErrorMessage, int order)
         {
             this.ErrorMessage = errorMessage;
-            this.Property = property;
+            this.PropertyName = property;
             this.UseLocalizedErrorMessage = useLocalizedErrorMessage;
             this.Order = order;
             this.StopValidationOnError = stopValidationOnError;
