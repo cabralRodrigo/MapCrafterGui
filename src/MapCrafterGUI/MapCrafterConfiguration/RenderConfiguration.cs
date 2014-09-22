@@ -3,7 +3,6 @@ using MapCrafterGUI.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 
 namespace MapCrafterGUI.MapCrafterConfiguration
 {
@@ -49,7 +48,7 @@ namespace MapCrafterGUI.MapCrafterConfiguration
             _instance = config;
         }
 
-        [ValidationDelegate("OutputFolderNotExists", "OutputFolder")]
-        public static Func<RenderConfiguration, bool> OutputFolderValidator = r => File.Exists(r.OutputFolder);
+        [ValidationDelegate("OutputFolderNotExists", "OutputFolder", true)]
+        public static Func<RenderConfiguration, bool> OutputFolderValidator = Validators.RenderConfigurationValidators.OutputFolderValidator;
     }
 }

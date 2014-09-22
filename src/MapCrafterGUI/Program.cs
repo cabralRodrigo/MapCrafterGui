@@ -1,12 +1,8 @@
-﻿using MapCrafterGUI.ClassValidator;
-using MapCrafterGUI.Forms;
+﻿using MapCrafterGUI.Forms;
 using MapCrafterGUI.LanguageHandler;
-using MapCrafterGUI.MapCrafterConfiguration;
 using MapCrafterGUI.MapCrafterGUIConfiguration;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace MapCrafterGUI
@@ -32,12 +28,6 @@ namespace MapCrafterGUI
 
             //Init of the configuration system
             Configuration.LoadSavedConfig();
-
-            WorldConfiguration w = new WorldConfiguration("", "");
-
-            var errors = Validator.Validate(w).ToList();
-
-
         }
     }
 }

@@ -40,10 +40,10 @@ namespace MapCrafterGUI.MapCrafterConfiguration
                 this.Rotations.Remove(rotation);
         }
 
-        [ValidationDelegate("InvalidMapID", "MapID")]
-        public static Func<MapConfiguration, bool> MapIDValidator = m => m.MapID != Guid.Empty;
+        [ValidationDelegate("InvalidMapID", "MapID", false)]
+        public static Func<MapConfiguration, bool> MapIDValidator = Validators.MapConfigurationValidators.MapIDValidator;
 
-        [ValidationDelegate("InvalidMapMap", "Name")]
-        public static Func<MapConfiguration, bool> NameValidator = m => !string.IsNullOrEmpty(m.Name);
+        [ValidationDelegate("InvalidMapMap", "Name", false)]
+        public static Func<MapConfiguration, bool> NameValidator = Validators.MapConfigurationValidators.NameValidator;
     }
 }

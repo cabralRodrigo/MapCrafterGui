@@ -1,13 +1,12 @@
 ﻿using MapCrafterGUI.MapCrafterConfiguration;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MapCrafterGUI.ClassValidator
 {
+    /// <summary>
+    /// The class which will store all the validation delegates
+    /// </summary>
     public static class Validators
     {
         public static class WorldConfigurationValidators
@@ -56,6 +55,36 @@ namespace MapCrafterGUI.ClassValidator
                 get
                 {
                     return world => !string.IsNullOrEmpty(world.Name);
+                }
+            }
+        }
+
+        public static class RenderConfigurationValidators
+        {
+            public static Func<RenderConfiguration, bool> OutputFolderValidator
+            {
+                get
+                {
+                    return renderConfiguration => File.Exists(renderConfiguration.OutputFolder);
+                }
+            }
+        }
+
+        public static class MapConfigurationValidators
+        {
+            public static Func<MapConfiguration, bool> MapIDValidator
+            {
+                get
+                {
+                    return mapConfiguration => mapConfiguration.MapID != Guid.Empty;
+                }
+            }
+
+            public static Func<MapConfiguration, bool> NameValidator
+            {
+                get
+                {
+                    return mapConfiguration => !string.IsNullOrEmpty(mapConfiguration.Name);
                 }
             }
         }

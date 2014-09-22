@@ -2,15 +2,12 @@
 using MapCrafterGUI.Enums;
 using System;
 using System.Collections.Generic;
-using System.IO;
 
 namespace MapCrafterGUI.MapCrafterConfiguration
 {
     [Validatable(true)]
     public class WorldConfiguration
     {
-        //public static readonly string Validate_Error_LevelFile = Language.GetLocalizedStringRaw("WorldConfiguration.Error.LevelFileInvalid");
-
         public WorldConfiguration(string name, string worldPath)
         {
             this.WorldPath = worldPath;
@@ -24,14 +21,14 @@ namespace MapCrafterGUI.MapCrafterConfiguration
         public List<MapConfiguration> Maps { get; set; }
         public string Name { get; set; }
 
-        [ValidationDelegate("WorldPath", "InvalidWorldPath", 0)]
+        [ValidationDelegate("WorldPath", "InvalidWorldPath", true, 0)]
         public static Func<WorldConfiguration, bool> WorldPathValidator = Validators.WorldConfigurationValidators.PathValidator;
 
-        [ValidationDelegate("WorldPath", "InvalidWorldPath", 1)]
+        [ValidationDelegate("WorldPath", "LevelFileInvalid", false, 1)]
         public static Func<WorldConfiguration, bool> WorldPathFilesValidator = Validators.WorldConfigurationValidators.WorldFilesValidator;
 
-        [ValidationDelegate("Name", "InvalidWorldName")]
-        public static Func<WorldConfiguration, bool> NameValidator = Validators.WorldConfigurationValidators.PathValidator;
+        [ValidationDelegate("Name", "InvalidWorldName", true)]
+        public static Func<WorldConfiguration, bool> NameValidator = Validators.WorldConfigurationValidators.NameValidator;
 
     }
 }
