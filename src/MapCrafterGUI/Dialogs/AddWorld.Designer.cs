@@ -79,7 +79,7 @@
             this.txtInputFolder.Name = "txtInputFolder";
             this.txtInputFolder.Size = new System.Drawing.Size(318, 20);
             this.txtInputFolder.TabIndex = 3;
-            this.txtInputFolder.Validating += new System.ComponentModel.CancelEventHandler(this.txtInputFolder_Validating);
+            this.txtInputFolder.TextChanged += new System.EventHandler(this.txtInputFolder_TextChanged);
             // 
             // lblInputFolder
             // 
@@ -107,7 +107,7 @@
             this.txtWorldName.Name = "txtWorldName";
             this.txtWorldName.Size = new System.Drawing.Size(318, 20);
             this.txtWorldName.TabIndex = 6;
-            this.txtWorldName.Validating += new System.ComponentModel.CancelEventHandler(this.txtWorldName_Validating);
+            this.txtWorldName.TextChanged += new System.EventHandler(this.txtWorldName_TextChanged);
             // 
             // cbDimension
             // 

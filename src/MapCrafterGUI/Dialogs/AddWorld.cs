@@ -1,11 +1,10 @@
-﻿using MapCrafterGUI.Enums;
+﻿using MapCrafterGUI.ClassValidator;
+using MapCrafterGUI.Enums;
 using MapCrafterGUI.Extensions;
 using MapCrafterGUI.Helpers;
 using MapCrafterGUI.LanguageHandler;
 using MapCrafterGUI.MapCrafterConfiguration;
 using System;
-using System.ComponentModel;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -14,6 +13,8 @@ namespace MapCrafterGUI.Dialogs
     public partial class frmAddWorld : Form
     {
         private readonly RenderConfiguration config;
+        private bool isWorldPathValid = false;
+        private bool isWorldNameValid = false;
 
         public frmAddWorld(RenderConfiguration config)
         {
@@ -28,16 +29,30 @@ namespace MapCrafterGUI.Dialogs
             this.btnAdd.SetLocalizedField(LanguageControlField.Text);
             this.btnCancel.SetLocalizedField(LanguageControlField.Text);
             this.btnInputFolder.SetLocalizedField(LanguageControlField.Text);
+
+            //TODO: Make this better, don't put the names of the controls hard coded
             this.folderDialog.Description = Language.GetLocalizedStringRaw("frmAddWorld.folderDialog.Description");
         }
 
+        private WorldConfiguration CreateWorldFromForm()
+        {
+            Dimension dimension;
+            if (Enum.TryParse<Dimension>(cbDimension.SelectedIndex.ToString(), out dimension))
+                return new WorldConfiguration(this.txtWorldName.Text, this.txtInputFolder.Text) { Dimension = dimension };
+            else
+                return null;
+        }
+
+        #region Events
+
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (txtInputValidate() & txtWorldNameValidate())
+            this.txtInputFolder_TextChanged(this, EventArgs.Empty);
+            this.txtWorldName_TextChanged(this, EventArgs.Empty);
+
+            if (this.isWorldPathValid && this.isWorldNameValid)
             {
-                Dimension dimension;
-                if (Enum.TryParse<Dimension>(cbDimension.SelectedIndex.ToString(), out dimension))
-                    this.config.Worlds.Add(new WorldConfiguration(this.txtWorldName.Text, this.txtInputFolder.Text) { Dimension = dimension });
+                this.config.Worlds.Add(this.CreateWorldFromForm());
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();
@@ -53,76 +68,32 @@ namespace MapCrafterGUI.Dialogs
         private void btnInputFolder_Click(object sender, EventArgs e)
         {
             if (folderDialog.OpenDialogFromPath(txtInputFolder.Text) == DialogResult.OK)
-            {
                 this.txtInputFolder.Text = folderDialog.SelectedPath;
-                this.txtInputValidate();
-            }
         }
 
-        private void txtInputFolder_Validating(object sender, CancelEventArgs e)
+        private void txtWorldName_TextChanged(object sender, EventArgs e)
         {
-            txtInputValidate();
-        }
-
-        private bool txtInputValidate()
-        {
-            string errorMessage = string.Empty;
-            bool error = false;
-
-            //TODO: Remake this logic
-            /*
-            if (!WorldConfiguration.Validate_FolderWorld(this.txtInputFolder.Text))
-            {
-                error = true;
-                errorMessage = WorldConfiguration.Validate_Error_FolderWorld;
-            }
-            else if (!WorldConfiguration.Validate_LevelFile(this.txtInputFolder.Text))
-            {
-                error = true;
-                errorMessage = WorldConfiguration.Validate_Error_LevelFile;
-            }
-
-            if (error)
-            {
-                this.txtInputFolder.BackColor = Color.LightPink;
-                this.validationControl.SetError(this.txtInputFolder, errorMessage);
-            }
+            var errors = Validator.Validate(this.CreateWorldFromForm(), i => i.Name);
+            if (errors.Count >= 1)
+                validationControl.DefineError(this.txtWorldName, errors[0].Error);
             else
-            {
-                this.txtInputFolder.BackColor = Color.White;
-                this.validationControl.SetError(this.txtInputFolder, string.Empty);
-            }
-            */
-            return !error;
+                validationControl.ClearError(this.txtWorldName);
+
+            this.isWorldNameValid = errors.Count == 0;
         }
 
-        private void txtWorldName_Validating(object sender, CancelEventArgs e)
+        private void txtInputFolder_TextChanged(object sender, EventArgs e)
         {
-            txtWorldNameValidate();
-        }
-
-        private bool txtWorldNameValidate()
-        {
-            //TODO: remake this logic
-            /*
-            bool error = !WorldConfiguration.Validate_WorldName(txtWorldName.Text);
-            string errorMessage = WorldConfiguration.Validate_Error_WorldName;
-
-            if (error)
-            {
-                this.txtWorldName.BackColor = Color.LightPink;
-                this.validationControl.SetError(this.txtWorldName, errorMessage);
-            }
+            var errors = Validator.Validate(this.CreateWorldFromForm(), i => i.WorldPath);
+            if (errors.Count >= 1)
+                validationControl.DefineError(this.txtInputFolder, errors[0].Error);
             else
-            {
-                this.txtWorldName.BackColor = Color.White;
-                this.validationControl.SetError(this.txtWorldName, string.Empty);
-            }
+                validationControl.ClearError(this.txtInputFolder);
 
-            return !error;
-            */
-
-            return true;
+            this.isWorldPathValid = errors.Count == 0;
         }
+
+        #endregion
+
     }
 }
