@@ -1,12 +1,20 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace MapCrafterGUI.Helpers
 {
     public static class UtilHelper
     {
+        /// <summary>
+        /// Verify if two types are equals
+        /// </summary>
+        /// <param name="type1">The first type</param>
+        /// <param name="type2">The second type</param>
+        /// <param name="inherit">Boolean indicating whether checks if the first type is assignable from the second type</param>
+        /// <returns>Boolean indicating if the first type is equals from the second</returns>
         public static bool IsClassesEqual(Type type1, Type type2, bool inherit)
         {
             if (inherit)
@@ -23,6 +31,26 @@ namespace MapCrafterGUI.Helpers
         public static Color GetColorFromHtmlColor(string htmlColor)
         {
             return ColorTranslator.FromHtml(htmlColor);
+        }
+
+        /// <summary>
+        /// Get the name of property from a lambda expression
+        /// </summary>
+        /// <typeparam name="T">The type for get the property name</typeparam>
+        /// <param name="expression">The lambda expression to define the property on the type</param>
+        /// <returns>The property name</returns>
+        public static string GetPropertyName<T>(Expression<Func<T, object>> expression)
+        {
+            MemberExpression memberExpression = (expression.Body is UnaryExpression ? ((UnaryExpression)expression.Body).Operand : expression.Body) as MemberExpression;
+
+            if (memberExpression == null)
+                throw new Exception(string.Format("Expression '{0}' don't refers to a property", expression.ToString()));
+
+            PropertyInfo property = memberExpression.Member as PropertyInfo;
+            if (property == null)
+                throw new Exception(string.Format("Expression '{0}' don't refers to a property", expression.ToString()));
+
+            return property.Name;
         }
 
         /// <summary>

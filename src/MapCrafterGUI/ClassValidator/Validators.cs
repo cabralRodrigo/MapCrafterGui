@@ -38,7 +38,7 @@ namespace MapCrafterGUI.ClassValidator
 
                         if (correctFolder)
                             foreach (string folder in foldersToSearch)
-                                if (!File.Exists(Path.Combine(world.WorldPath, folder)))
+                                if (!Directory.Exists(Path.Combine(world.WorldPath, folder)))
                                 {
                                     correctFolder = false;
                                     break;
@@ -54,7 +54,7 @@ namespace MapCrafterGUI.ClassValidator
             {
                 get
                 {
-                    return world => !string.IsNullOrEmpty(world.Name);
+                    return world => world.Name == null ? false : !string.IsNullOrEmpty(world.Name.Trim());
                 }
             }
         }

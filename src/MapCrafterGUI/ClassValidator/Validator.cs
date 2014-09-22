@@ -1,8 +1,10 @@
 ﻿using MapCrafterGUI.Extensions;
+using MapCrafterGUI.Helpers;
 using MapCrafterGUI.LanguageHandler;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace MapCrafterGUI.ClassValidator
@@ -90,6 +92,18 @@ namespace MapCrafterGUI.ClassValidator
         public static List<ValidationError> Validate<T>(T objectToValidate, PropertyInfo property)
         {
             return Validator.Validate(objectToValidate, property.Name);
+        }
+
+        /// <summary>
+        /// Validates an instance of any class decorated with <seealso cref="MapCrafterGUI.ClassValidator.ValidationDelegateAttribute"/> attribute
+        /// </summary>
+        /// <typeparam name="T">The type of the class which will be validated</typeparam>
+        /// <param name="objectToValidate">The object which will be validated</param>
+        /// <param name="expressionToGetProperty">The lambda expression to define which property will be validated</param>
+        /// <returns>List with all errors in the validation, the list will be empty if no error was found</returns>
+        public static List<ValidationError> Validate<T>(T objectToValidte, Expression<Func<T, object>> expressionToGetProperty)
+        {
+            return Validator.Validate(objectToValidte, UtilHelper.GetPropertyName(expressionToGetProperty));
         }
 
         /// <summary>

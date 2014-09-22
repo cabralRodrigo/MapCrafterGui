@@ -2,6 +2,7 @@
 using MapCrafterGUI.MapCrafterGUIConfiguration;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -22,11 +23,55 @@ namespace MapCrafterGUI.Extensions
             source.AppendLine(string.Format(format, args));
         }
 
+        /// <summary>
+        /// Clears an error alert on control
+        /// </summary>
+        /// <param name="source">The error provider</param>
+        /// <param name="control">The control</param>
+        public static void ClearError(this ErrorProvider source, Control control)
+        {
+            //Clear the error on the control
+            source.SetError(control, string.Empty);
+
+            //Update the control if it is a textbox
+            if (control is TextBox)
+                ((TextBox)control).BackColor = Color.White;
+        }
+
+        /// <summary>
+        /// Sets an error alert on control
+        /// </summary>
+        /// <param name="source">The error provider</param>
+        /// <param name="control">The control</param>
+        /// <param name="message">The error message</param>
+        public static void DefineError(this ErrorProvider source, Control control, string message)
+        {
+            ///Sets the error on the control
+            source.SetError(control, string.IsNullOrEmpty(message) ? "Message missing. Probably the language file is incomplete." : message);
+
+            //Update the control if it is a textbox
+            if (control is TextBox)
+                ((TextBox)control).BackColor = Color.LightPink;
+        }
+
+        /// <summary>
+        /// Gets all fields info in the type
+        /// </summary>
+        /// <typeparam name="T">The type of the field to be searched</typeparam>
+        /// <param name="source">The type which the fields will be search</param>
+        /// <returns>IEnumerable containing all the fields found</returns>
         public static IEnumerable<FieldInfo> GetFields<T>(this Type source)
         {
             return Extensions.GetFields<T>(source, false);
         }
 
+        /// <summary>
+        /// Gets all fields info in the type
+        /// </summary>
+        /// <typeparam name="T">The type of the field to be searched</typeparam>
+        /// <param name="source">The type which the fields will be search</param>
+        /// <param name="inherit">Boolean indicating if the searched fields type could be inherited from the target type</param>
+        /// <returns>IEnumerable containing all the fields found</returns>
         public static IEnumerable<FieldInfo> GetFields<T>(this Type source, bool inherit)
         {
             foreach (FieldInfo field in source.GetFields())
@@ -34,11 +79,26 @@ namespace MapCrafterGUI.Extensions
                     yield return field;
         }
 
+        /// <summary>
+        /// Gets all fields info in the type
+        /// </summary>
+        /// <typeparam name="T">The type of the field to be searched</typeparam>
+        /// <param name="source">The type which the fields will be search</param>
+        /// <param name="bidingAttrs">The binding attributes of the fields</param>
+        /// <returns>IEnumerable containing all the fields found</returns>
         public static IEnumerable<FieldInfo> GetFields<T>(this Type source, BindingFlags bidingAttrs)
         {
             return Extensions.GetFields<T>(source, bidingAttrs, false);
         }
-      
+
+        /// <summary>
+        /// Gets all fields info in the type
+        /// </summary>
+        /// <typeparam name="T">The type of the field to be searched</typeparam>
+        /// <param name="source">The type which the fields will be search</param>
+        /// <param name="bidingAttrs">The binding attributes of the fields</param>
+        /// <param name="inherit">Boolean indicating if the searched fields type could be inherited from the target type</param>
+        /// <returns>IEnumerable containing all the fields found</returns>
         public static IEnumerable<FieldInfo> GetFields<T>(this Type source, BindingFlags bidingAttrs, bool inherit)
         {
             foreach (FieldInfo field in source.GetFields(bidingAttrs))
