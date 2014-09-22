@@ -1,5 +1,7 @@
 ﻿using MapCrafterGUI.Helpers;
 using System;
+using System.Linq.Expressions;
+using System.Text;
 using System.Windows.Forms;
 
 namespace MapCrafterGUI.LanguageHandler
@@ -70,6 +72,20 @@ namespace MapCrafterGUI.LanguageHandler
         {
             string localizedString = LanguageFile.instance.GetFieldValue(fieldName, defaultValue);
             return UtilHelper.StringReplaceWithMetadata(localizedString, metadata);
+        }
+
+        public static string BuildFieldName(Type parentType, Expression<Func<dynamic>> expression, string fieldLastName)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.Append(parentType.Name + ".");
+
+            foreach (MemberExpression memberExpression in UtilHelper.GetMembersExpressionFromDynamicResultInExpression(expression))
+                sb.Append(memberExpression.Member.Name + ".");
+
+            sb.Append(fieldLastName);
+
+            return sb.ToString();
         }
 
         private static string GetFieldNameOnLanguageFileForControl(Control control, LanguageControlField field)

@@ -7,7 +7,6 @@ using System.Windows.Forms;
 
 namespace MapCrafterGUI.Forms.Main
 {
-
     /// <summary>
     /// TagPage created specifically for an instance of the class WorldConfiguration
     /// </summary>
@@ -52,13 +51,13 @@ namespace MapCrafterGUI.Forms.Main
             this.Text = string.Format("{0} ({1})", this.World.Name, Language.GetLocalizedDescriptionForEnum(this.World.Dimension));
             this.lblTextDimension.Text = Language.GetLocalizedDescriptionForEnum(this.World.Dimension);
 
-            //Set the localiztion text
+            //Loads the current language on the controls
             this.lblWorldInput.SetLocalizedField(LanguageControlField.Text);
             this.lblWorldName.SetLocalizedField(LanguageControlField.Text);
             this.lblDimension.SetLocalizedField(LanguageControlField.Text);
             this.btnAddMap.SetLocalizedField(LanguageControlField.Text);
-            this.headerName.Text = Language.GetLocalizedStringRaw(this.GetType().Name + ".headerName.Text");
-            this.hearderRenderMode.Text = Language.GetLocalizedStringRaw(this.GetType().Name + ".headerRenderMode.Text");
+            this.headerName.Text = Language.GetLocalizedStringRaw(this.BuildFieldName(() => new { this.headerName }, "Text"));
+            this.headerRenderMode.Text = Language.GetLocalizedStringRaw(this.BuildFieldName(() => new { this.headerRenderMode }, "Text"));
 
             //Refresh the map list on the list view
             this.RefreshMapsList();

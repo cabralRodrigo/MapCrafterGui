@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Linq.Expressions;
@@ -61,6 +62,20 @@ namespace MapCrafterGUI.Helpers
         public static string GetHexCodeFromColor(Color color)
         {
             return string.Format("#{0}{1}{2}", color.R.ToString("X2"), color.G.ToString("X2"), color.B.ToString("X2"));
+        }
+
+        /// <summary>
+        /// Get all members expression in an expression which has a dynamic type as return
+        /// </summary>
+        /// <param name="expression">Expression to get all members expression</param>
+        /// <returns>IEnumerable with all members expression in the expression received</returns>
+        public static IEnumerable<MemberExpression> GetMembersExpressionFromDynamicResultInExpression(Expression<Func<dynamic>> expression)
+        {
+            if (expression == null)
+                throw new ArgumentNullException("expression");
+
+            NewExpression exp = expression.Body as NewExpression;
+            return exp.Arguments.Cast<MemberExpression>();
         }
 
         /// <summary>

@@ -1,4 +1,6 @@
 ﻿using MapCrafterGUI.LanguageHandler;
+using System;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -26,6 +28,11 @@ namespace MapCrafterGUI.Extensions
             PropertyInfo prop = control.GetType().GetProperty(field.ToString());
             string newPropValue = Language.GetLocalizedFieldForControl(control, field, defaultValue, metadata);
             prop.SetValue(control, newPropValue);
+        }
+
+        public static string BuildFieldName(this Control control, Expression<Func<dynamic>> expression, string fieldLastName)
+        {
+            return Language.BuildFieldName(control.GetType(), expression, fieldLastName);
         }
     }
 }

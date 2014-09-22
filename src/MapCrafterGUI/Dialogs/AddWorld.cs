@@ -29,9 +29,10 @@ namespace MapCrafterGUI.Dialogs
             this.btnAdd.SetLocalizedField(LanguageControlField.Text);
             this.btnCancel.SetLocalizedField(LanguageControlField.Text);
             this.btnInputFolder.SetLocalizedField(LanguageControlField.Text);
-
-            //TODO: Make this better, don't put the names of the controls hard coded
-            this.folderDialog.Description = Language.GetLocalizedStringRaw("frmAddWorld.folderDialog.Description");
+            
+            //Builds and sets the folder dialog description from the lanaguage file
+            string folderDialogField = Language.BuildFieldName(typeof(frmAddWorld), () => new { this.folderDialog }, "Description");
+            this.folderDialog.Description = Language.GetLocalizedStringRaw(folderDialogField);
         }
 
         private WorldConfiguration CreateWorldFromForm()
